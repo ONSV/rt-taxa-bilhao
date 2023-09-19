@@ -6,11 +6,30 @@ library(camcorder)
 
 source("R/plots.R")
 
-## Gráfico 3
-taxa_mortes <- make_tibble_data()
+## Gráfico 2
+taxa_modais <- make_taxa_modais_data()
 
-g3 <- plot_taxa_mortes(taxa_mortes)
+modais_plot <- plot_modais(taxa_modais)
+
+## Gráfico 3
+taxa_mortes <- make_taxas_data()
+
+taxas_plot <- plot_taxa_mortes(taxa_mortes)
 
 ## Exportando os gráficos
 
-ggsave(g3, filename = "plot/g3.png", width = 6, height = 3.5, dpi = 300)
+ggsave(
+  taxas_plot,
+  filename = "plot/taxas_plot.png", 
+  width = 6, 
+  height = 3.5, 
+  dpi = 300
+)
+
+ggsave(
+  modais_plot,
+  filename = "plot/modais_plot.png",
+  width = 6,
+  height = 4,
+  dpi = 300
+)
