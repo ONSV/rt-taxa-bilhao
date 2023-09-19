@@ -24,11 +24,21 @@ make_taxa_modais_data <- function() {
 ## Plot taxa modais
 
 plot_modais <- function(taxa_modais) {
-  ggplot(
-    taxa_modais %>% mutate(modal = fct_reorder(modal, -taxa)), 
-    aes(x = ano, y = taxa, fill = modal)
-  ) +
-    geom_col(alpha = 0.8, aes(fill = modal), position = "dodge") +
+  taxa_modais %>% 
+    mutate(modal = fct_reorder(modal, -taxa)) %>% 
+    arrange(ano, modal) %>% 
+    group_by(ano)  %>% 
+    mutate(label_pos = sum(taxa) - cumsum(taxa) + 0.5 * taxa) %>% 
+    ggplot(aes(x = ano, y = taxa, fill = modal)) +
+    geom_col(alpha = 0.7, aes(fill = modal)) +
+    geom_label(
+      aes(
+        label = scales::number(taxa, accuracy = 0.1, decimal.mark = ","), 
+        y = label_pos
+      ),
+      color = "grey90",
+      size = 2.2
+    ) +
     coord_flip() +
     labs(x = NULL, y = NULL) +
     scale_x_reverse(breaks = seq(2011, 2020)) +
@@ -44,7 +54,6 @@ plot_modais <- function(taxa_modais) {
       fill = guide_legend(reverse = TRUE)
     )
 }
-
 
 ## Make a tibble with country data
 
@@ -104,3 +113,16 @@ plot_taxa_mortes <- function(taxa_mortes) {
 }
 
 ## Importa outras taxas
+taxas_altas <- read_csv("data/dados_vkt.csv", skip = 2)
+
+taxas_altas <- taxas_altas %>% 
+  select(País:`2020`) %>%
+  rename(local = País) %>%
+  #filter(across(``))
+  pivot_longer(-local, names_to = "ano", values_to = "taxa") %>%
+  filter(taxa > 10) 
+
+ggplot(taxas_altas, aes(x = ano, y = taxa, color = local)) +
+  geom_point() +
+  geom_line(aes(group = local)) +
+  scale_x_continuous(breaks = seq(2011, 2020))
