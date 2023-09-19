@@ -102,3 +102,5 @@ plot_taxa_mortes <- function(taxa_mortes) {
     theme(panel.grid.major.y = element_blank())
   
 }
+
+## Importa outras taxas
