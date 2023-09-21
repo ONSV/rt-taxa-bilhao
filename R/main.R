@@ -3,8 +3,11 @@ library(tidyverse)
 library(onsvplot)
 library(ggflags)
 library(camcorder)
+library(readODS)
 
 source("R/plots.R")
+
+taxa_paises <- read_ods("data/taxa_paises.ods")
 
 ## Gráfico 2
 taxa_modais <- make_taxa_modais_data()

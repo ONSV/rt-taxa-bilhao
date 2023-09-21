@@ -112,17 +112,31 @@ plot_taxa_mortes <- function(taxa_mortes) {
   
 }
 
-## Importa outras taxas
-taxas_altas <- read_csv("data/dados_vkt.csv", skip = 2)
+## Taxa dos paises ao longo dos anos
 
-taxas_altas <- taxas_altas %>% 
-  select(País:`2020`) %>%
-  rename(local = País) %>%
-  #filter(across(``))
-  pivot_longer(-local, names_to = "ano", values_to = "taxa") %>%
-  filter(taxa > 10) 
+taxa_alta <- taxa_paises %>% 
+  pivot_longer(-pais, names_to = "ano", values_to = "taxa") %>% 
+  mutate(
+    ano = as.numeric(str_sub(ano, 2, 5)),
+    pais = if_else(pais == "Coréia do Sul", "Coreia do Sul", pais)
+  ) %>% 
+  filter(taxa > 10) %>% 
+  mutate(sigla = case_match(
+    pais,
+    "Brasil" ~ "br",
+    "Hungria" ~ "hu",
+    "México" ~ "mx",
+    "República Tcheca" ~ "cz",
+    "Coreia do Sul" ~ "kr",
+    "Malásia" ~ "ma",
+    "Polônia" ~ "pl",
+  ))
 
-ggplot(taxas_altas, aes(x = ano, y = taxa, color = local)) +
+## From 'taxa_alta', plot taxa across ano grouping with pais
+ggplot(taxa_alta, aes(x = ano, y= taxa, group = pais, color = pais)) +
+  geom_line() +
   geom_point() +
-  geom_line(aes(group = local)) +
-  scale_x_continuous(breaks = seq(2011, 2020))
+  theme_onsv(basesize = 8) +
+  labs(x = NULL, y = NULL) +
+  scale_x_continuous(breaks = seq(2011, 2020)) +
+  scale_discrete_onsv()
