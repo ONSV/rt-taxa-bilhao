@@ -13,18 +13,18 @@ make_taxa_modais_data <- function() {
     Ônibus = c(3.34, 3.14, 2.5, 3.08, 3.12, 1.13, 2.25, 1.76, 1.89, 1.44)
   )
 
-  taxa_mortes_modais %>% 
+  taxa_mortes_modais |> 
     pivot_longer(-ano, names_to = "modal", values_to = "taxa")
 }
 
 ## Plot taxa modais
 
 plot_modais <- function(taxa_modais) {
-  taxa_modais %>% 
-    mutate(modal = fct_reorder(modal, -taxa)) %>% 
-    arrange(ano, modal) %>% 
-    group_by(ano)  %>% 
-    mutate(label_pos = sum(taxa) - cumsum(taxa) + 0.5 * taxa) %>% 
+  taxa_modais |> 
+    mutate(modal = fct_reorder(modal, -taxa)) |> 
+    arrange(ano, modal) |> 
+    group_by(ano)  |> 
+    mutate(label_pos = sum(taxa) - cumsum(taxa) + 0.5 * taxa) |> 
     ggplot(aes(x = ano, y = taxa, fill = modal)) +
     geom_col(alpha = 0.7, aes(fill = modal)) +
     geom_label(
@@ -85,10 +85,14 @@ make_taxas_data <- function() {
 
 plot_taxa_mortes <- function(taxa_mortes) {
   ggplot(
-    data = taxa_mortes %>% mutate(pais = fct_reorder(pais, -n)), 
+    data = taxa_mortes |> mutate(pais = fct_reorder(pais, -n)), 
     aes(x = pais, y = n, country = sigla)
   ) +
-    geom_segment(aes(xend = pais, yend = 0), color = "grey70", size = 0.4) +
+    geom_segment(
+      aes(xend = pais, yend = 0),
+      color = "grey70",
+      linewidth = 0.4
+    ) +
     geom_flag(size = 4) + 
     geom_text(
       aes(label = scales::number(
@@ -111,13 +115,13 @@ plot_taxa_mortes <- function(taxa_mortes) {
 ## Taxa dos paises ao longo dos anos
 
 calc_taxa_alta <- function(tab_paises) {
-  tab_paises %>%
-    pivot_longer(-pais, names_to = "ano", values_to = "taxa") %>% 
+  tab_paises |>
+    pivot_longer(-pais, names_to = "ano", values_to = "taxa") |> 
     mutate(
       ano = as.numeric(str_sub(ano, 2, 5)),
       pais = if_else(pais == "Coréia do Sul", "Coreia do Sul", pais)
-    ) %>% 
-    filter(taxa > 10) %>% 
+    ) |> 
+    filter(taxa > 10) |> 
     mutate(sigla = case_match(
       pais,
       "Brasil" ~ "br",
@@ -131,7 +135,7 @@ calc_taxa_alta <- function(tab_paises) {
 }
 
 plot_taxa_alta <- function(tab_taxa_alta) {
-  ggplot(tab_taxa_alta, aes(x = ano, y= taxa, group = pais, color = pais)) +
+  ggplot(tab_taxa_alta, aes(x = ano, y = taxa, group = pais, color = pais)) +
     geom_line() +
     geom_point(pch = 21, fill = "white") +
     theme_onsv(basesize = 8) +
@@ -140,3 +144,5 @@ plot_taxa_alta <- function(tab_taxa_alta) {
     scale_discrete_onsv()
 
 }
+
+## From 'taxa_alta', plot taxa across ano grouping with pais
