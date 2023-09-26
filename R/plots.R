@@ -1,7 +1,3 @@
-
-## Set theme_onsv as ggplot theme
-theme_set(theme_onsv())
-
 ## Make a tibble with type of transport data
 
 make_taxa_modais_data <- function() {
@@ -114,29 +110,33 @@ plot_taxa_mortes <- function(taxa_mortes) {
 
 ## Taxa dos paises ao longo dos anos
 
-taxa_alta <- taxa_paises %>% 
-  pivot_longer(-pais, names_to = "ano", values_to = "taxa") %>% 
-  mutate(
-    ano = as.numeric(str_sub(ano, 2, 5)),
-    pais = if_else(pais == "Coréia do Sul", "Coreia do Sul", pais)
-  ) %>% 
-  filter(taxa > 10) %>% 
-  mutate(sigla = case_match(
-    pais,
-    "Brasil" ~ "br",
-    "Hungria" ~ "hu",
-    "México" ~ "mx",
-    "República Tcheca" ~ "cz",
-    "Coreia do Sul" ~ "kr",
-    "Malásia" ~ "ma",
-    "Polônia" ~ "pl",
-  ))
+calc_taxa_alta <- function(tab_paises) {
+  tab_paises %>%
+    pivot_longer(-pais, names_to = "ano", values_to = "taxa") %>% 
+    mutate(
+      ano = as.numeric(str_sub(ano, 2, 5)),
+      pais = if_else(pais == "Coréia do Sul", "Coreia do Sul", pais)
+    ) %>% 
+    filter(taxa > 10) %>% 
+    mutate(sigla = case_match(
+      pais,
+      "Brasil" ~ "br",
+      "Hungria" ~ "hu",
+      "México" ~ "mx",
+      "República Tcheca" ~ "cz",
+      "Coreia do Sul" ~ "kr",
+      "Malásia" ~ "ma",
+      "Polônia" ~ "pl",
+    ))  
+}
 
-## From 'taxa_alta', plot taxa across ano grouping with pais
-ggplot(taxa_alta, aes(x = ano, y= taxa, group = pais, color = pais)) +
-  geom_line() +
-  geom_point() +
-  theme_onsv(basesize = 8) +
-  labs(x = NULL, y = NULL) +
-  scale_x_continuous(breaks = seq(2011, 2020)) +
-  scale_discrete_onsv()
+plot_taxa_alta <- function(tab_taxa_alta) {
+  ggplot(tab_taxa_alta, aes(x = ano, y= taxa, group = pais, color = pais)) +
+    geom_line() +
+    geom_point(pch = 21, fill = "white") +
+    theme_onsv(basesize = 8) +
+    labs(x = NULL, y = NULL) +
+    scale_x_continuous(breaks = seq(2011, 2020)) +
+    scale_discrete_onsv()
+
+}
