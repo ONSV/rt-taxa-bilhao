@@ -14,6 +14,9 @@ taxa_paises <- read_ods("data/taxa_paises.ods")
 tabela3 <- read_ods("data/tabela3.ods") |>
   janitor::clean_names()
 
+tabela_6 <- read_ods("data/tabela6.ods") |>
+  janitor::clean_names()
+
 theme_set(theme_onsv())
 
 # Gráficos ----
@@ -37,7 +40,7 @@ taxa_alta_plot <- plot_taxa_alta(taxa_alta)
 
 ggsave(
   taxas_plot,
-  filename = "plot/taxas_plot.png", 
+  filename = "plot/fig2.png", 
   width = 6, 
   height = 3.5, 
   dpi = 300
@@ -45,7 +48,7 @@ ggsave(
 
 ggsave(
   modais_plot,
-  filename = "plot/modais_plot.png",
+  filename = "plot/fig3.png",
   width = 6,
   height = 4,
   dpi = 300
@@ -53,7 +56,7 @@ ggsave(
 
 ggsave(
   taxa_alta_plot,
-  filename = "plot/taxa_alta_plot.png",
+  filename = "plot/fig4.png",
   width = 6,
   height = 4,
   dpi = 300
@@ -65,71 +68,15 @@ ggsave(
 
 tabela_uf <- arrange_tabela_uf(tabela3)
 
-gt_table_3 <- tabela_uf |> 
-  pivot_wider(names_from = ano, values_from = c(taxa_bilhao, rank)) |> 
-  group_by(regiao) |> 
-  gt(rowname_col = "uf") |> 
-  tab_spanner(
-    label = "2011",
-    columns = ends_with("2011")
-  ) |> 
-  tab_spanner(
-    label = "2012",
-    columns = ends_with("2012")
-  ) |> 
-  tab_spanner(
-    label = "2013",
-    columns = ends_with("2013")
-  ) |> 
-  tab_spanner(
-    label = "2014",
-    columns = ends_with("2014")
-  ) |> 
-  tab_spanner(
-    label = "2015",
-    columns = ends_with("2015")
-  ) |> 
-  tab_spanner(
-    label = "2016",
-    columns = ends_with("2016")
-  ) |> 
-  tab_spanner(
-    label = "2017",
-    columns = ends_with("2017")
-  ) |> 
-  tab_spanner(
-    label = "2018",
-    columns = ends_with("2018")
-  ) |> 
-  tab_spanner(
-    label = "2019",
-    columns = ends_with("2019")
-  ) |> 
-  tab_spanner(
-    label = "2020",
-    columns = ends_with("2020")
-  ) |> 
-  cols_label(
-    starts_with("taxa") ~ "",
-    starts_with("rank") ~ ""
-  ) |>   
-  tab_style(
-    style = cell_text(weight = "bold"),
-    locations = cells_row_groups()
-  ) |> 
-  cols_align(
-    align = "center",
-    columns = starts_with("rank")
-  ) |> 
-  data_color(
-    columns = starts_with("taxa"),
-    method = "numeric",
-    palette = "viridis"
-  ) |> 
-  fmt_number(
-    columns = starts_with("taxa"),
-    dec_mark = ",",
-    sep_mark = "."
-  )
+gt_table_3 <- make_gt_uf(tabela_uf)
 
-gtsave(gt_table_3, "table/gt_table_3.png", vwidth = 1800, vheight = 2400)
+## Tabela 6
+
+tabela_decada <- clean_tabela_6(tabela_6)
+
+gt_table_6 <- make_gt_decada(tabela_decada)  
+
+## Exportando as tabelas
+
+gtsave(gt_table_3, "table/tab3.png", vwidth = 1800, vheight = 2400)
+gtsave(gt_table_6, "table/tab6.png", vwidth = 1800, vheight = 2400)
