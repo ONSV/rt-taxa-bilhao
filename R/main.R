@@ -17,6 +17,9 @@ tabela3 <- read_ods("data/tabela3.ods") |>
 tabela_6 <- read_ods("data/tabela6.ods") |>
   janitor::clean_names()
 
+tabela_7 <- read_ods("data/tabela7.ods") |> 
+  janitor::clean_names()
+
 theme_set(theme_onsv())
 
 # Gráficos ----
@@ -72,9 +75,37 @@ gt_table_3 <- make_gt_uf(tabela_uf)
 
 ## Tabela 6
 
-tabela_decada <- clean_tabela_6(tabela_6)
+tabela_decada <- clean_tabela_6(tabela_6) |> 
+  add_pais_id(pais)
 
-gt_table_6 <- make_gt_decada(tabela_decada)  
+gt_table_6 <- make_gt_decada(tabela_decada)
+
+## Tabela 7
+
+tabela_var <- tabela_7 |> 
+  arrange_tabela_7() |>
+  add_pais_id(pais)
+
+tabela_var |> 
+  pivot_wider(
+    names_from = ano,
+    values_from = c("taxa", "var")
+  ) |> 
+  select(
+    pais_id, pais, starts_with("taxa"), starts_with("var_"), variacao_total
+  ) |> 
+  gt() |> 
+  fmt_flag(
+    columns = pais_id
+  ) |> 
+  sub_missing(
+    columns = taxa_1970:var_2020,
+    missing_text = ""
+  )
+
+
+
+## Tabela 8
 
 ## Exportando as tabelas
 

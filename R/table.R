@@ -103,42 +103,46 @@ make_gt_uf <- function(tab_uf) {
     )
 }
 
+add_pais_id <- function(table, pais_col) {
+  table |>
+    mutate(pais_id = case_match(
+      {{pais_col}},
+      "Alemanha" ~ "DE",
+      "Australia" ~ "AU",
+      "Áustria" ~ "AT",
+      "Bélgica" ~ "BE",
+      "Canadá" ~ "CA",
+      "Coréia do Sul" ~ "KR",
+      "Dinamarca" ~ "DK",
+      "Eslovênia" ~ "SI",
+      "EUA" ~ "US",
+      "Finlândia" ~ "FI",
+      "França" ~ "FR",
+      "Holanda" ~ "NL",
+      "Hungria" ~ "HU",
+      "Irlanda" ~ "IE",
+      "Islândia" ~ "IS",
+      "Israel" ~ "IL",
+      "Japão" ~ "JP",
+      "Malásia" ~ "MY",
+      "México" ~ "MX",
+      "Noruega" ~ "NO",
+      "Nova Zelândia" ~ "NZ",
+      "Polônia" ~ "PL",
+      "Reino Unido" ~ "GB",
+      "República Tcheca" ~ "CZ",
+      "Suécia" ~ "SE",
+      "Suíça" ~ "CH",
+      "Brasil" ~ "BR"      
+    ))
+}
+
 clean_tabela_6 <- function(tab_6) {
   tab_6 |> 
     pivot_longer(cols = x2011:x2020, names_to = "ano", values_to = "taxa") |> 
     mutate(
       ano = str_sub(as.character(ano), 2, 5),
-      taxa = as.double(taxa),
-      pais_id = case_match(
-        pais,
-        "Alemanha" ~ "DE",
-        "Australia" ~ "AU",
-        "Áustria" ~ "AT",
-        "Bélgica" ~ "BE",
-        "Canadá" ~ "CA",
-        "Coréia do Sul" ~ "KR",
-        "Dinamarca" ~ "DK",
-        "Eslovênia" ~ "SI",
-        "EUA" ~ "US",
-        "Finlândia" ~ "FI",
-        "França" ~ "FR",
-        "Holanda" ~ "NL",
-        "Hungria" ~ "HU",
-        "Irlanda" ~ "IE",
-        "Islândia" ~ "IS",
-        "Israel" ~ "IL",
-        "Japão" ~ "JP",
-        "Malásia" ~ "MY",
-        "México" ~ "MX",
-        "Noruega" ~ "NO",
-        "Nova Zelândia" ~ "NZ",
-        "Polônia" ~ "PL",
-        "Reino Unido" ~ "GB",
-        "República Tcheca" ~ "CZ",
-        "Suécia" ~ "SE",
-        "Suíça" ~ "CH",
-        "Brasil" ~ "BR",
-      )
+      taxa = as.double(taxa)
     )
 }
 
@@ -203,5 +207,29 @@ make_gt_decada <- function(tab_decada) {
       palette = "BrBG",
       domain = c(-1, 1),
       reverse = "TRUE"
+    )
+}
+
+arrange_tabela_7 <- function(tab_7) {
+  tab_7 |> 
+    pivot_longer(
+      cols = x1970:x2020,
+      names_to = "ano",
+      values_to = "taxa"
+    ) |> 
+    mutate(
+      ano = as.numeric(str_sub(ano, 2, 5)),
+      taxa = if_else(taxa == "-", NA, taxa),
+      taxa = str_replace_all(taxa, ",", ".")
+    ) |> 
+    separate_wider_delim(
+      taxa, 
+      delim = " (", 
+      names = c("taxa", "var"), 
+      too_few = "align_start"
+    ) |> 
+    mutate(
+      taxa = as.numeric(taxa),
+      var = as.numeric(str_remove(var, "%\\)")) / 100
     )
 }
