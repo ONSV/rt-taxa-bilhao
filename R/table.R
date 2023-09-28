@@ -199,7 +199,7 @@ make_gt_decada <- function(tab_decada) {
     ) |> 
     data_color(
       columns = starts_with("20"),
-      palette = "Reds",
+      palette = "Oranges",
       na_color = "white"
     ) |> 
     data_color(
@@ -220,6 +220,8 @@ arrange_tabela_7 <- function(tab_7) {
     mutate(
       ano = as.numeric(str_sub(ano, 2, 5)),
       taxa = if_else(taxa == "-", NA, taxa),
+      variacao_total = if_else(variacao_total == "-", NA, variacao_total),
+      variacao_total = as.double(variacao_total),
       taxa = str_replace_all(taxa, ",", ".")
     ) |> 
     separate_wider_delim(
@@ -232,4 +234,87 @@ arrange_tabela_7 <- function(tab_7) {
       taxa = as.numeric(taxa),
       var = as.numeric(str_remove(var, "%\\)")) / 100
     )
+}
+
+make_gt_var <- function(table_var) {
+  table_var |> 
+    pivot_wider(
+    names_from = ano,
+    values_from = c("taxa", "var")
+    ) |> 
+    select(
+      pais_id, 
+      pais, 
+      starts_with("taxa"), 
+      starts_with("var_"), 
+      variacao_total
+    ) |> 
+    gt() |> 
+    fmt_flag(
+      columns = pais_id
+    ) |> 
+    sub_missing(
+      columns = taxa_1970:variacao_total,
+      missing_text = ""
+    ) |> 
+    fmt_number(
+      columns = starts_with("taxa"),
+      decimals = 1,
+      dec_mark = ",",
+      sep_mark = "."
+    ) |> 
+    fmt_percent(
+      columns = var_1970:variacao_total,
+      decimals = 1,
+      dec_mark = ",",
+      sep_mark = "."
+    ) |> 
+    tab_spanner(
+      label = "Taxa",
+      columns = starts_with("taxa")
+    ) |> 
+    tab_spanner(
+      label = "Variação na década",
+      columns = starts_with("var_")
+    ) |> 
+    cols_label(
+      pais_id = "",
+      pais = "País",
+      taxa_1970 = "1970",
+      taxa_1980 = "1980",
+      taxa_1990 = "1990",
+      taxa_2000 = "2000",
+      taxa_2010 = "2010",
+      taxa_2020 = "2020",
+      var_1970 = "1970",
+      var_1980 = "1980",
+      var_1990 = "1990",
+      var_2000 = "2000",
+      var_2010 = "2010",
+      var_2020 = "2020",
+      variacao_total = "Variação" 
+    ) |> 
+    tab_style(
+      style = cell_text(
+        weight = "bold"
+      ),
+      locations = cells_body(rows = nrow(tabela_7))
+    ) |> 
+    tab_footnote(
+      footnote = "Com base no período disponível",
+      locations = cells_column_labels(columns = variacao_total)
+    ) |> 
+    data_color(
+      columns = starts_with("taxa"),
+      palette = "Oranges",
+      na_color = "white"
+    ) |> 
+    data_color(
+      columns = var_1980:variacao_total,
+      palette = "Greens",
+      na_color = "white",
+      domain = c(-1, 0),
+      reverse = "TRUE"
+    ) |> 
+    cols_hide(columns = var_1970)
 }

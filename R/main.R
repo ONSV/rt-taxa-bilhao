@@ -86,24 +86,7 @@ tabela_var <- tabela_7 |>
   arrange_tabela_7() |>
   add_pais_id(pais)
 
-tabela_var |> 
-  pivot_wider(
-    names_from = ano,
-    values_from = c("taxa", "var")
-  ) |> 
-  select(
-    pais_id, pais, starts_with("taxa"), starts_with("var_"), variacao_total
-  ) |> 
-  gt() |> 
-  fmt_flag(
-    columns = pais_id
-  ) |> 
-  sub_missing(
-    columns = taxa_1970:var_2020,
-    missing_text = ""
-  )
-
-
+gt_table_7 <- make_gt_var(tabela_var)
 
 ## Tabela 8
 
