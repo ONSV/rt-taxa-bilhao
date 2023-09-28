@@ -20,6 +20,9 @@ tabela_6 <- read_ods("data/tabela6.ods") |>
 tabela_7 <- read_ods("data/tabela7.ods") |> 
   janitor::clean_names()
 
+tabela_8 <- read_ods("data/tabela8.ods") |> 
+  janitor::clean_names()
+
 theme_set(theme_onsv())
 
 # Gráficos ----
@@ -69,7 +72,8 @@ ggsave(
 
 ## Tabela 3
 
-tabela_uf <- arrange_tabela_uf(tabela3)
+tabela_uf <- arrange_tabela_uf(tabela3) |> 
+  add_regiao(uf)
 
 gt_table_3 <- make_gt_uf(tabela_uf)
 
@@ -90,7 +94,22 @@ gt_table_7 <- make_gt_var(tabela_var)
 
 ## Tabela 8
 
+tabela_comparacao <- tabela_8 |> 
+  arrange_tabela_8() |> 
+  add_pais_id(pais) |> 
+  add_regiao(uf)
+
+gt_table_8 <- make_gt_comparacao(tabela_comparacao)  
+
 ## Exportando as tabelas
 
-gtsave(gt_table_3, "table/tab3.png", vwidth = 1800, vheight = 2400)
-gtsave(gt_table_6, "table/tab6.png", vwidth = 1800, vheight = 2400)
+gt_tables <- list(
+  gt_table_3,
+  gt_table_6,
+  gt_table_7,
+  gt_table_8
+)
+
+tables_path <- paste0("table/tab", c(3, 6, 7, 8), ".png")
+
+walk2(gt_tables, tables_path, gtsave, vwidth = 1800, vheight = 2400)

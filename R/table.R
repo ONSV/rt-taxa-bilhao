@@ -9,12 +9,19 @@ arrange_tabela_uf <- function(tab_uf) {
     mutate(
       ano = str_sub(ano, 2, 5),
       taxa_bilhao = as.numeric(str_replace(taxa_bilhao, ",", ".")),
-      ## Insere a regiao de cada estado
+      rank = gsub("\\(|\\)", "", rank)
+    ) |> 
+    rename(uf = unidade_da_federacao)
+}
+
+add_regiao <- function(uf_table, uf) {
+  uf_table |>
+    mutate(
       regiao = case_match(
-        unidade_da_federacao,
+        {{ uf }},
         c(
-          "Acre", "Amapá", "Amazonas", "Pará",
-           "Rondônia", "Roraima", "Tocantins"
+          "Acre", "Amapá", "Amazonas", "Pará", 
+          "Rondônia", "Roraima", "Tocantins"
         ) ~ "Norte",
         c(
           "Alagoas", "Bahia", "Ceará", "Maranhão", 
@@ -28,10 +35,8 @@ arrange_tabela_uf <- function(tab_uf) {
           "Mato Grosso", "Mato Grosso do Sul", "Goiás", "Distrito Federal"
         ) ~ "Centro-Oeste",
         .default = ""
-      ),
-      rank = gsub("\\(|\\)", "", rank)
-    ) |> 
-    rename(uf = unidade_da_federacao)
+      )
+    )
 }
 
 make_gt_uf <- function(tab_uf) {
@@ -106,9 +111,9 @@ make_gt_uf <- function(tab_uf) {
 add_pais_id <- function(table, pais_col) {
   table |>
     mutate(pais_id = case_match(
-      {{pais_col}},
+      {{ pais_col }},
       "Alemanha" ~ "DE",
-      "Australia" ~ "AU",
+      c("Australia", "Austrália") ~ "AU",
       "Áustria" ~ "AT",
       "Bélgica" ~ "BE",
       "Canadá" ~ "CA",
@@ -249,7 +254,6 @@ make_gt_var <- function(table_var) {
       starts_with("var_"), 
       variacao_total
     ) |> 
-    gt() |> 
     fmt_flag(
       columns = pais_id
     ) |> 
@@ -317,4 +321,46 @@ make_gt_var <- function(table_var) {
       reverse = "TRUE"
     ) |> 
     cols_hide(columns = var_1970)
+}
+
+arrange_tabela_8 <- function(table_8) {
+  table_8 |> 
+    rename(taxa = mortes_por_bilhao_km_2020, pais_eq = taxa_equivalente) |> 
+    mutate(pais = str_sub(pais_eq, 1, -8))
+}
+
+make_gt_comparacao <- function(table_comparacao) {
+  table_comparacao |> 
+    select(uf, taxa, pais_id, pais_eq, anos_de_atraso, pais, regiao) |> 
+    group_by(regiao) |> 
+    gt() |> 
+    cols_hide(columns = pais) |> 
+    fmt_flag(columns = pais_id) |> 
+    cols_merge(columns = c("pais_id", "pais_eq")) |> 
+    cols_label(
+      uf = "Unidade da Federação",
+      taxa = "Taxa",
+      pais_id = "País equivalente (ano)",
+      anos_de_atraso = "Anos de atraso"
+    ) |> 
+    tab_style(
+      style = cell_text(
+        weight = "bold"
+      ),
+      locations = cells_body(rows = nrow(tabela_comparacao))
+    ) |> 
+    tab_style(
+      style = cell_text(align = "center"),
+      locations = cells_column_labels(columns = everything())
+    ) |>
+    tab_style(
+      style = cell_text(weight = "bold"),
+      locations = cells_row_groups()
+    ) |> 
+    fmt_number(columns = taxa, dec_mark = ",", sep_mark = ".") |> 
+    data_color(
+      columns = taxa,
+      palette = "Oranges"
+    ) |> 
+    cols_align(columns = anos_de_atraso, align = "center")
 }
