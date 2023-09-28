@@ -99,7 +99,7 @@ make_gt_uf <- function(tab_uf) {
     data_color(
       columns = starts_with("taxa"),
       method = "numeric",
-      palette = "viridis"
+      palette = "Oranges"
     ) |> 
     fmt_number(
       columns = starts_with("taxa"),
@@ -254,6 +254,7 @@ make_gt_var <- function(table_var) {
       starts_with("var_"), 
       variacao_total
     ) |> 
+    gt() |>
     fmt_flag(
       columns = pais_id
     ) |> 
@@ -333,7 +334,7 @@ make_gt_comparacao <- function(table_comparacao) {
   table_comparacao |> 
     select(uf, taxa, pais_id, pais_eq, anos_de_atraso, pais, regiao) |> 
     group_by(regiao) |> 
-    gt() |> 
+    gt(rowname_col = "uf") |> 
     cols_hide(columns = pais) |> 
     fmt_flag(columns = pais_id) |> 
     cols_merge(columns = c("pais_id", "pais_eq")) |> 
