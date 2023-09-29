@@ -1,5 +1,31 @@
 ## Make a tibble with type of transport data
 
+make_taxa_decada  <- function() {
+  taxa_decada <- tibble(
+    ano = c(2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020),
+    taxa = c(51.40, 49.29, 40.01, 44.27, 38.47, 34.76, 35.03, 32.46, 29.75, 32.75)
+  )
+  return(taxa_decada)
+}
+
+plot_taxa_decada <- function(table_taxa_decada) {
+  ggplot(taxa_decada, aes(x = ano, y = taxa)) +
+    geom_line(color = onsv_palette$blue) +
+    geom_point(pch = 21, fill = "white", color = onsv_palette$blue) +
+    geom_label(
+      aes(label = scales::number(taxa, decimal.mark = ",")),
+      size = 2.5,
+      nudge_y = 3
+    ) +
+    scale_y_continuous(limits = c(0, NA), breaks = seq(0, 60, 10)) +
+    scale_x_continuous(breaks = seq(2011, 2020)) +
+    labs(x = NULL, y = NULL) +
+    theme_onsv(basesize = 10) +
+    theme(
+      panel.grid.major.x = element_blank()
+    )
+}
+
 make_taxa_modais_data <- function() {
   taxa_mortes_modais <- tibble(
     ano = c(2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020),

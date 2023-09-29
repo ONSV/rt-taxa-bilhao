@@ -27,6 +27,12 @@ theme_set(theme_onsv())
 
 # Gráficos ----
 
+## Gráfico 1
+
+taxa_decada <- make_taxa_decada()
+
+graf1 <- plot_taxa_decada(taxa_decada)    
+
 ## Gráfico 2
 taxa_modais <- make_taxa_modais_data()
 
@@ -43,6 +49,14 @@ taxa_alta <- calc_taxa_alta(taxa_paises)
 taxa_alta_plot <- plot_taxa_alta(taxa_alta)
 
 ## Exportando os gráficos
+
+ggsave(
+  graf1,
+  filename = "plot/fig1.png",
+  width = 6,
+  height = 3.5,
+  dpi = 300
+)
 
 ggsave(
   taxas_plot,
