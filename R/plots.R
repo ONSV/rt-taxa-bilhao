@@ -52,14 +52,15 @@ plot_modais <- function(taxa_modais) {
     group_by(ano)  |> 
     mutate(label_pos = sum(taxa) - cumsum(taxa) + 0.5 * taxa) |> 
     ggplot(aes(x = ano, y = taxa, fill = modal)) +
-    geom_col(alpha = 0.7, aes(fill = modal)) +
-    geom_label(
+    geom_col(alpha = 0.7, aes(fill = modal), position = "dodge") +
+    geom_text(
       aes(
-        label = scales::number(taxa, accuracy = 0.1, decimal.mark = ","), 
-        y = label_pos
+        label = scales::number(taxa, accuracy = 0.1, decimal.mark = ",")
       ),
-      color = "grey90",
-      size = 2.2
+      color = "grey10",
+      size = 1.8,
+      position = position_dodge(width = 0.9),
+      hjust = -0.3
     ) +
     coord_flip() +
     labs(x = NULL, y = NULL) +

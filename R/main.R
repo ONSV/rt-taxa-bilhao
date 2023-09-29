@@ -113,7 +113,9 @@ tabela_comparacao <- tabela_8 |>
   add_pais_id(pais) |> 
   add_regiao(uf)
 
-gt_table_8 <- make_gt_comparacao(tabela_comparacao)  
+gt_table_8 <- make_gt_comparacao(tabela_comparacao)
+
+gt_table_8
 
 ## Exportando as tabelas
 

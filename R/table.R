@@ -332,8 +332,7 @@ arrange_tabela_8 <- function(table_8) {
 
 make_gt_comparacao <- function(table_comparacao) {
   table_comparacao |> 
-    select(uf, taxa, pais_id, pais_eq, anos_de_atraso, pais, regiao) |> 
-    group_by(regiao) |> 
+    select(uf, taxa, pais_id, pais_eq, anos_de_atraso, pais) |> 
     gt(rowname_col = "uf") |> 
     cols_hide(columns = pais) |> 
     fmt_flag(columns = pais_id) |> 
