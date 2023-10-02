@@ -41,7 +41,7 @@ modais_plot <- plot_modais(taxa_modais)
 ## Gráfico 3
 taxa_mortes <- make_taxas_data()
 
-taxas_plot <- plot_taxa_mortes(taxa_mortes)
+taxas_plot <- plot_taxa_mortes(taxa_mortes, flag_size = 5)
 
 ## Gráfico 4
 
@@ -61,8 +61,8 @@ ggsave(
 ggsave(
   taxas_plot,
   filename = "plot/fig2.png", 
-  width = 6, 
-  height = 3.5, 
+  width = 7, 
+  height = 5, 
   dpi = 300
 )
 

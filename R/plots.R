@@ -110,7 +110,7 @@ make_taxas_data <- function() {
 
 ## Make a ggplot of the data with segment and points
 
-plot_taxa_mortes <- function(taxa_mortes) {
+plot_taxa_mortes <- function(taxa_mortes, flag_size) {
   ggplot(
     data = taxa_mortes |> mutate(pais = fct_reorder(pais, -n)), 
     aes(x = pais, y = n, country = sigla)
@@ -120,7 +120,7 @@ plot_taxa_mortes <- function(taxa_mortes) {
       color = "grey70",
       linewidth = 0.4
     ) +
-    geom_flag(size = 4) + 
+    geom_flag(size = flag_size) + 
     geom_text(
       aes(label = scales::number(
         n, 
@@ -129,7 +129,7 @@ plot_taxa_mortes <- function(taxa_mortes) {
         big.mark = "."
       )), 
       size = 2.5, 
-      nudge_y = 1.6,
+      nudge_y = 1.8,
       color = "grey20"
     ) +
     coord_flip() +
