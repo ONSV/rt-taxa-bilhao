@@ -142,7 +142,7 @@ add_pais_id <- function(table, pais_col) {
     ))
 }
 
-clean_tabela_6 <- function(tab_6) {
+clean_tabela_5 <- function(tab_6) {
   tab_6 |> 
     pivot_longer(cols = x2011:x2020, names_to = "ano", values_to = "taxa") |> 
     mutate(
@@ -215,7 +215,7 @@ make_gt_decada <- function(tab_decada) {
     )
 }
 
-arrange_tabela_7 <- function(tab_7) {
+arrange_tabela_6 <- function(tab_7) {
   tab_7 |> 
     pivot_longer(
       cols = x1970:x2020,
@@ -303,7 +303,7 @@ make_gt_var <- function(table_var) {
       style = cell_text(
         weight = "bold"
       ),
-      locations = cells_body(rows = nrow(tabela_7))
+      locations = cells_body(rows = 27)
     ) |> 
     tab_footnote(
       footnote = "Com base no período disponível",
@@ -324,7 +324,7 @@ make_gt_var <- function(table_var) {
     cols_hide(columns = var_1970)
 }
 
-arrange_tabela_8 <- function(table_8) {
+arrange_tabela_7 <- function(table_8) {
   table_8 |> 
     rename(taxa = mortes_por_bilhao_km_2020, pais_eq = taxa_equivalente) |> 
     mutate(pais = str_sub(pais_eq, 1, -8))
@@ -364,3 +364,55 @@ make_gt_comparacao <- function(table_comparacao) {
     ) |> 
     cols_align(columns = anos_de_atraso, align = "center")
 }
+
+make_gt_tab1 <- function(tab1) {
+  tab1 |> 
+    gt() |> 
+    cols_label(
+      ano = "Ano",
+      quilometragem = "Quilometragem",
+      mortes_no_transito = "Mortes no trânsito",
+      mortes_bilhao_de_km = "Mortes / bilhão de km"
+    ) |> 
+    fmt_number(
+      columns = c(quilometragem, mortes_no_transito, mortes_bilhao_de_km),
+      dec_mark = ",",
+      sep_mark = "."
+    ) |> 
+    fmt_number(
+      columns = c(quilometragem, mortes_no_transito),
+      decimals = 0,
+      dec_mark = ",",
+      sep_mark = "."
+    ) |> 
+    cols_align(columns = -quilometragem, align = "center") |> 
+    tab_options(
+      column_labels.background.color = onsv_palette$blue,
+      column_labels.font.weight = "bold"
+    )
+}
+
+make_gt_tab3 <- function(tab3) {
+  tab3 |> 
+    gt() |> 
+    cols_label(
+      ano = "Ano",
+      mortes_no_transito = "Mortes no trânsito",
+      mortes_bilhao_de_km = "Mortes / bilhão de km"
+    ) |> 
+    sub_missing(missing_text = "-") |> 
+    cols_align(align = "center") |> 
+    tab_options(
+      column_labels.background.color = onsv_palette$blue,
+      column_labels.font.weight = "bold"
+    ) |> 
+    fmt_number(columns = -ano, dec_mark = ",", sep_mark = ".") |> 
+    fmt_number(
+      columns = mortes_no_transito,
+      sep_mark = ".",
+      dec_mark = ",",
+      decimals = 0
+    )
+}
+
+tabela_4
