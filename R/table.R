@@ -414,5 +414,3 @@ make_gt_tab3 <- function(tab3) {
       decimals = 0
     )
 }
-
-tabela_4

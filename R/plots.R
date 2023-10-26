@@ -171,5 +171,3 @@ plot_taxa_alta <- function(tab_taxa_alta) {
     scale_discrete_onsv()
 
 }
-
-## From 'taxa_alta', plot taxa across ano grouping with pais
