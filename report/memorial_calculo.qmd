@@ -10,6 +10,14 @@ author:
 date: last-modified
 ---
 
+```{r}
+#| include: false
+
+library(gt)
+library(tidyverse)
+```
+
+
 ## Objetivos e escopo do documento
 
 O presente documento tem como objetivo apresentar a metodologia utilizada para estimar o valor do índice de mortes por quilômetro percorrida pela frota de veículos rodoviários no Brasil e em cada estado da federação durante a 1° Década de Ação pela Segurança no Trânsito (2011-2021) com o intuito de obter um diagnóstico atualizado e mais preciso acerca da evolução do desempenho da segurança viária no país.
@@ -40,30 +48,69 @@ No Quadro 1, estão os tipos de combustíveis disponíveis nos dados do SENATRAN
 
 **Quadro 1** - Combustíveis considerados na análise:
 
-| Tipo de Combustível            | Categoria Considerada |
-|--------------------------------|-----------------------|
-| ALCOOL                         | ALCOOL                |
-| ALCOOL/GAS NATURAL COMBUSTIVEL | ALCOOL                |
-| ALCOOL/GAS NATURAL VEICULAR    | GNV                   |
-| ALCOOL/GASOLINA                | FLEX                  |
-| DIESEL                         | DIESEL                |
-| DIESEL/ELETRICO                | ELÉTRICO              |
-| DIESEL/GAS NATURAL COMBUSTIVEL | DIESEL                |
-| DIESEL/GAS NATURAL VEICULAR    | GNV                   |
-| ELETRICO/FONTE EXTERNA         | ELÉTRICO              |
-| ELETRICO/FONTE INTERNA         | ELÉTRICO              |
-| ETANOL/ELETRICO                | ELÉTRICO              |
-| GAS METANO                     | *DESCONSIDERADO*      |
-| GAS NATURAL VEICULAR           | GNV                   |
-| GAS/NATURAL/LIQUEFEITO         | *DESCONSIDERADO*      |
-| GASOGENIO                      | *DESCONSIDERADO*      |
-| GASOL/GAS NATURAL COMBUSTIVEL  | GASOLINA              |
-| GASOLINA                       | GASOLINA              |
-| GASOLINA/ALCOOL/ELETRICO       | ELÉTRICO              |
-| GASOLINA/ALCOOL/GAS NATURAL    | GNV                   |
-| GASOLINA/ELETRICO              | ELÉTRICO              |
-| GASOLINA/GAS NATURAL VEICULAR  | GNV                   |
-| HÍBRIDO PLUG-IN                | *DESCONSIDERADO*      |
+```{r}
+#| label: quadro-1
+
+tipo_comb <- c(
+  "ALCOOL",
+  "ALCOOL/GAS NATURAL COMBUSTIVEL",
+  "ALCOOL/GAS NATURAL VEICULAR",
+  "ALCOOL/GASOLINA",
+  "DIESEL",
+  "DIESEL/ELETRICO",
+  "DIESEL/GAS NATURAL COMBUSTIVEL",
+  "DIESEL/GAS NATURAL VEICULAR",
+  "ELETRICO/FONTE EXTERNA",
+  "ELETRICO/FONTE INTERNA",
+  "ETANOL/ELETRICO",
+  "GAS METANO",
+  "GAS NATURAL VEICULAR",
+  "GAS/NATURAL/LIQUEFEITO",
+  "GASOGENIO",
+  "GASOL/GAS NATURAL COMBUSTIVEL",
+  "GASOLINA",
+  "GASOLINA/ALCOOL/ELETRICO",
+  "GASOLINA/ALCOOL/GAS NATURAL",
+  "GASOLINA/ELETRICO",
+  "GASOLINA/GAS NATURAL VEICULAR",
+  "HÍBRIDO PLUG-IN"
+)
+
+tipo_considerado <- c(
+  rep("ALCOOL", 2),
+  "GNV",
+  "FLEX",
+  "DIESEL",
+  "ELÉTRICO",
+  "DIESEL",
+  "GNV",
+  rep("ELÉTRICO", 3),
+  "DESCONSIDERADO",
+  "GNV",
+  rep("DESCONSIDERADO", 2),
+  rep("GASOLINA", 2),
+  "ELÉTRICO",
+  "GNV",
+  "ELÉTRICO",
+  "GNV",
+  "DESCONSIDERADO"
+)
+
+tibble(tipo_comb = tipo_comb, tipo_considerado = tipo_considerado) |> 
+  gt() |> 
+  cols_label(
+    tipo_comb = "Tipo de Combustível",
+    tipo_considerado = "Categoria Considerada"
+  ) |> 
+  tab_style(
+    style = list(
+      cell_text(color = "white", weight = "bold"),
+      cell_fill(color = onsvplot::onsv_palette$blue)
+    ),
+    locations = cells_column_labels()
+  )
+
+```
 
 #### `Tabela 3`: Frota por tipo de veículo
 
@@ -96,11 +143,65 @@ Em seguida, utilizou-se os dados do RENAVAM referentes a categoria de veículos 
 
 #### Fator de correção da frota
 
+Com as duas bases de dados apenas com os dados relevantes para a pesquisa, foi verificado que havia uma diferença no total da frota por categoria e da frota por combustível de modo que foi necessário aplicar um fator de correção para poder calcular a frota agregada por categoria e por combustível para cada estado, o fator de correção $FC_{frota}$ foi calculado conforme a @eq-fcf, onde o numerador $F_{ct}$ é o total da frota da \textcolor{blue}{Tabela 2} e o denominador $F_{vt}$ é o total da frota da \textcolor{blue}{Tabela 3}.
 
+$$
+FC_{frota} = \frac{F_{ct}}{F_{vt}}
+$$ {#eq-fcf}
 
 #### `Tabela 4`: Correção da `Tabela 3` pelo fator de correção
 
+Para esta pesquisa, os dados da frota por tipo de veículo foram seguidos fielmente e os da frota por combustível foram utilizados apenas como uma referência para os cálculos. Por isso, o fator de correção calculado anteriormente é utilizado para multiplicar cada valor da \textcolor{blue}{Tabela 3}, resultando na \textcolor{blue}{Tabela 4}.
+
 ### Aba `<ESTADO>`: Frota por estado
+
+Em seguida, foi necessário considerar algumas premissas para encontrar a quantidade da frota por veículo e por combustível de forma agregada. Para isto, foi considerado, conforme o Quadro 3, os seguintes combustíveis para as seguintes categorias de veículos.
+
+**Quadro 3** - Relacação tipo de combustível -- Categoria de veículo:
+
++----------------------+---------------------+
+| Categoria de veículo | Tipo de combustível |
++======================+=====================+
+| AUTOMÓVEL            | GNV                 |
+|                      |                     |
+|                      | FLEX                |
+|                      |                     |
+|                      | ÁLCOOL              |
+|                      |                     |
+|                      | GASOLINA            |
+|                      |                     |
+|                      | ELÉTRICO            |
++----------------------+---------------------+
+| CAMINHÃO             | DIESEL              |
++----------------------+---------------------+
+| CAMINHÃO TRATOR      | DIESEL              |
++----------------------+---------------------+
+| CAMINHONETE          | GASOLINA            |
+|                      |                     |
+|                      | DIESEL              |
+|                      |                     |
+|                      | ELÉTRICO            |
++----------------------+---------------------+
+| CAMIONETA            | GASOLINA            |
+|                      |                     |
+|                      | DIESEL              |
+|                      |                     |
+|                      | ELÉTRICO            |
++----------------------+---------------------+
+| MICRO-ÔNIBUS         | DIESEL              |
++----------------------+---------------------+
+| MOTOCICLETA          | GASOLINA            |
++----------------------+---------------------+
+| MOTONETA             | GASOLINA            |
++----------------------+---------------------+
+| ÔNIBUS               | DIESEL              |
++----------------------+---------------------+
+| UTILITÁRIO           | FLEX                |
+|                      |                     |
+|                      | GASOLINA            |
+|                      |                     |
+|                      | ELÉTRICO            |
++----------------------+---------------------+
 
 #### `Tabela 5` e `Tabela 6`: Frota
 
