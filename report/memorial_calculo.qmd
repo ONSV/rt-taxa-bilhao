@@ -203,17 +203,66 @@ Em seguida, foi necessário considerar algumas premissas para encontrar a quanti
 |                      | ELÉTRICO            |
 +----------------------+---------------------+
 
+Foi realizado alguns procedimentos e verificou-se que com estas premissas, é possível calcular a frota. Nas próximas seções, encontra-se a metodologia que deve ser utilizada para determinar a frota por tipo de combustível e por tipo de veículo para cada estado. A variação que pode haver de estado para estado é a presença ou não da gasolina nos veículos de passeio2. Assim, cada estado em cada ano possui uma \textcolor{blue}{Caixa de Texto} na planilha onde está especificado conforme o uso ou não dos combustíveis para cada tipo de veículo.
+
 #### `Tabela 5` e `Tabela 6`: Frota
+
+As \textcolor{blue}{Tabelas 5} e \textcolor{blue}{6} correspondem, respectivamente, a frota por combustível (\textcolor{blue}{Tabela 2}) e a frota corrigida por tipo de veículo (\textcolor{blue}{Tabela 4}) de cada ano e estado. Na \textcolor{blue}{Tabela 6}, há uma terceira coluna que representa a quantidade de veículos desconsiderando os veículos elétricos, calculados na \textcolor{blue}{Tabela 7}, para poder determinar a quantidade de veículos para cada combustível.
 
 #### `Tabela 7`: Veículos elétricos
 
+Nesta pesquisa, apenas o automóvel, a caminhonete, a camioneta e o utilitário
+apresentaram a modalidade elétrica. Assim, para determinar a quantidade destes veículos, deve-se calcular, primeiramente, a quantidade total de veículos de passeio $VP_t$, ou seja, todos os veículos que possuem uma parcela elétrica (@eq-vpt).
+
+$$
+VP_t = Automoveis + Caminhonetes + Camionetas + Utilitários
+$$ {#eq-vpt}
+
+Em seguida, deve-se extrair a proporção destes veículos, isto é, calcular a
+porcentagem que cada categoria possui do resultado da @eq-vpt por meio da @eq-elec. Aqui, $P_{tipo}$ representa essa proportção, $F_{tipo}$ representa o tamanho da frota $tipo$ e $F_{elec}$ representa o tamanho da frota de veículos elétricos.
+
+$$
+P_{tipo} = \frac{F_{tipo}}{F_{elec}}
+$$ {#eq-elec}
+
+Assim, ao multiplicar os resultados da @eq-elec com o valor da frota elétrica (\textcolor{blue}{Tabela 5]), tem-se a quantidade de veículos elétricos para cada categoria. A quantidade de veículos para cada categoria desconsiderando os modelos elétricos é determinada pela subtração da segunda coluna da \textcolor{blue}{Tabela 6] pelo resultado da multiplicação da @eq-vpt pela frota elétrica (\textcolor{blue}{Tabela 5}) para cada categoria, apresentando o resultado na terceira coluna da \textcolor{blue}{Tabela 6}.
+
 #### Ônibus, Micro-ônibus, Caminhão e Caminhão Trator
+
+A frota de ônibus, micro-ônibus, caminhão e caminhão-trator foi considerada apenas com o combustível óleo diesel, portanto não foi necessário nenhum procedimento de cálculo.
 
 #### Motocicleta e Motoneta
 
+A frota de motocicleta e motoneta foi considerada apenas com a gasolina, portanto não foi necessário nenhum procedimento de cálculo.
+
 #### `Tabela 8`: Utilitaŕios
 
+Os veículos utilitários foram divididos em flex e gasolina. Como os automóveis também foram considerados flex, é necessário incluir os dados dos automóveis para determinar a quantidade de utilitários flex. O primeiro passo consiste em calcular o total de automóveis e utilitários. Em seguida, deve-se calcular a proporção de automóveis e utilitários em relação a soma de ambos.
+
+Dependendo do estado, esta proporção pode ou não ser utilizada para determinar a quantidade de utilitários flex. Há algumas condições que devem ser impostas para não haver um resultado negativo para a quantidade de veículos flex: se a multiplicação da porcentagem de utilitários pela frota flex (álcool/gasolina) for superior a quantidade total de utilitários, deve-se considerar que a quantidade total de utilitários é totalmente flex, sem a parcela da gasolina. Caso contrário, se a multiplicação da porcentagem de utilitários pela
+frota flex (álcool/gasolina) for inferior a quantidade total de utilitários, deve-se utilizar o resultado desta multiplicação para a quantidade de utilitários flex. Este cálculo está representado na @eq-util.
+
+$$
+U_{flex} = 
+    \begin{cases}
+        U,& \text{se } (flex \times P_U) > U\\
+        flex \times P_U,& \text{caso contrário}
+    \end{cases}
+$$ {#eq-util}
+
+Em que $U_{flex}$ é a frota de utilitários flex, $U$ é a frota de utilitários, $flex$ é a frota de veículos flex e $P_U$ é a proporção de utilitários.
+
+Por fim, para determinar a quantidade de utilitários à gasolina, basta subtrair os utilitários flex dos utilitários. Lembrando que como os veículos flex operam em álcool e gasolina, ao não haver nenhum veículo à gasolina, isto significa que não há nenhum veículo a gasolina pura.
+
 #### `Tabela 9`: Automóveis
+
+$$
+A_{flex} = 
+    \begin{cases}
+        A - A_{alcool} - A_{GNV},& \text{se } ((P_{A} \times flex) > A) \vee (A_{alcool} + A_{GNV} + (P_{A} \times flex) > A)
+    \end{cases}
+$$
+
 
 #### `Tabela 10`: Caminhonetes e Camionetas
 
