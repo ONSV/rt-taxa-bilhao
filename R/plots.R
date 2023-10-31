@@ -90,8 +90,8 @@ make_taxas_data <- function() {
   )
 
   paises_siglas <- c(
-    "no", "is", "se", "ch", "ie", "dk", "de", "au", "es", "fi", "ca", "fr",
-    "at", "jp", "is", "us", "nz", "cz", "kr", "pl", "hu", "mx", "br"
+    "no", "is", "se", "ch", "ie", "dk", "de", "au", "si", "fi", "ca", "fr",
+    "at", "jp", "il", "us", "nz", "cz", "kr", "pl", "hu", "mx", "br"
   )
 
   taxa_mortes <- c(

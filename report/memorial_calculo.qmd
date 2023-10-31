@@ -1,0 +1,185 @@
+---
+title: "Índice de Mortes por Bilhão de Quilômetros Percorridos - Metodologia e Memorial de Cálculo"
+format: onsvpub-pdf
+author: 
+  - Jorge Tiago Bastos
+  - Coca Ferraz
+  - Pedro Augusto Borges dos Santos
+  - Louise Fuhrmann
+  - Marco Antonio Silva Guibor
+date: last-modified
+---
+
+## Objetivos e escopo do documento
+
+O presente documento tem como objetivo apresentar a metodologia utilizada para estimar o valor do índice de mortes por quilômetro percorrida pela frota de veículos rodoviários no Brasil e em cada estado da federação durante a 1° Década de Ação pela Segurança no Trânsito (2011-2021) com o intuito de obter um diagnóstico atualizado e mais preciso acerca da evolução do desempenho da segurança viária no país.
+
+Este índice é composto pelos três indicadores: o número de mortes em sinistros de trânsito a frota de veículos e o volume de vendas por combustível.
+
+## Diretrizes iniciais
+
+A seguir está apresentado o passo a passo necessário para calcular o índice de mortes por bilhão de quilômetros. Para isto, é necessário utilizar duas planilhas. A primeira é intitulada `Full data auxiliar <ANO> – <ANO>` e está relacionada a frota de veículos. A segunda planilha intitulada `Full data <ANO> – <ANO>` apresenta todos os dados necessários para o cálculo do índice, após a adição das abas `ONSV_ANO` da planilha auxiliar.
+
+Nesta planilha, as cédulas em \textcolor{red}{vermelho/laranja} devem ser alteradas, isto é, são inputs, as demais são calculadas automaticamente. As palavras em \textcolor{blue}{azul}, neste relatório, referem-se a arquivos em si, abas ou tabelas da planilha.
+
+## Planilha `Full Data Auxiliar`
+
+### Aba `ONSV_AUX_<ANO>`: Frota de veículos
+
+Os dados da frota nacional de veículos foram obtidos por meio do Registrado Nacional de Veículos Automotores (RENAVAM) que contém a frota de veículos brasileira de acordo com a Secretária Nacional de Trânsito (SENATRAN, 2023). Estes dados[^1] são divulgados para cada estado da federação de forma desagregada por ano de fabricação, CEP, tipo de combustível, cor, potência, tipo de restrição, marca e modelo ou tipo espécie e eixos. Para este estudo, é necessário conhecer a quantidade da frota agregada por tipo de combustível, por categoria de veículo e por estado. No entanto, como a base de dados apresenta ou a frota por categoria de veículo ou por tipo de combustível para cada estado foram realizados alguns procedimentos para agregar estes dois conjuntos de dados. Inicialmente, deve-se baixar as planilhas "quantidade de veículos por uf município e combustível" e "frota por uf e tipo de veículo" ambas no **mês de junho.**
+
+[^1]: <https://www.gov.br/transportes/pt-br/assuntos/transito/senatran/estatisticas>
+
+#### `Tabela 1`: Frota por tipo de combustível
+
+Em seguida, deve-se inserir os dados referentes a quantidade de veículos por combustível por estado na \textcolor{blue}{Tabela 1} da planilha.
+
+#### `Tabela 2`: Sintetização da `Tabela 1`
+
+No Quadro 1, estão os tipos de combustíveis disponíveis nos dados do SENATRAN e a sintetização dos combustíveis nas categoriais mais relevantes para esta pesquisa, visto que há uma grande diversidade de combustíveis. Assim, nesta pesquisa foram consideradas as seguintes categorias de combustíveis: veículos à álcool, a gás natural veicular (GNV), a diesel, flex, elétricos e a gasolina. Na planilha, a \textcolor{blue}{Tabela 2} apresenta apenas os dados das categorias citadas anteriormente.
+
+**Quadro 1** - Combustíveis considerados na análise:
+
+| Tipo de Combustível            | Categoria Considerada |
+|--------------------------------|-----------------------|
+| ALCOOL                         | ALCOOL                |
+| ALCOOL/GAS NATURAL COMBUSTIVEL | ALCOOL                |
+| ALCOOL/GAS NATURAL VEICULAR    | GNV                   |
+| ALCOOL/GASOLINA                | FLEX                  |
+| DIESEL                         | DIESEL                |
+| DIESEL/ELETRICO                | ELÉTRICO              |
+| DIESEL/GAS NATURAL COMBUSTIVEL | DIESEL                |
+| DIESEL/GAS NATURAL VEICULAR    | GNV                   |
+| ELETRICO/FONTE EXTERNA         | ELÉTRICO              |
+| ELETRICO/FONTE INTERNA         | ELÉTRICO              |
+| ETANOL/ELETRICO                | ELÉTRICO              |
+| GAS METANO                     | *DESCONSIDERADO*      |
+| GAS NATURAL VEICULAR           | GNV                   |
+| GAS/NATURAL/LIQUEFEITO         | *DESCONSIDERADO*      |
+| GASOGENIO                      | *DESCONSIDERADO*      |
+| GASOL/GAS NATURAL COMBUSTIVEL  | GASOLINA              |
+| GASOLINA                       | GASOLINA              |
+| GASOLINA/ALCOOL/ELETRICO       | ELÉTRICO              |
+| GASOLINA/ALCOOL/GAS NATURAL    | GNV                   |
+| GASOLINA/ELETRICO              | ELÉTRICO              |
+| GASOLINA/GAS NATURAL VEICULAR  | GNV                   |
+| HÍBRIDO PLUG-IN                | *DESCONSIDERADO*      |
+
+#### `Tabela 3`: Frota por tipo de veículo
+
+Em seguida, utilizou-se os dados do RENAVAM referentes a categoria de veículos para realizar uma seleção das categorias de veículos relevantes para esta pesquisa. No Quadro 2, estão representadas as categorias e quais foram considerados ou desconsiderados. Assim, nesta pesquisa as categorias consideradas são: automóvel, caminhão, caminhão trator, caminhonete, camioneta, micro-ônibus, motocicleta, motoneta, ônibus e utilitário. Na planilha, deve-se preencher a \textcolor{blue}{Tabela 3} apenas com as categorias consideradas.
+
+**Quadro 2** - Veículos considerados na análise:
+
+| Tipo de Veículo SENATRAN | Categoria Considerada |
+|--------------------------|-----------------------|
+| AUTOMÓVEL                | CONSIDERADO           |
+| BONDE                    | DESCONSIDERADO        |
+| CAMINHÃO                 | CONSIDERADO           |
+| CAMINHÃO TRATOR          | CONSIDERADO           |
+| CAMINHONETE              | CONSIDERADO           |
+| CAMIONETA                | CONSIDERADO           |
+| CHASSI PLATAFORMA        | DESCONSIDERADO        |
+| CICLOMOTOR               | DESCONSIDERADO        |
+| MICRO-ÔNIBUS             | CONSIDERADO           |
+| MOTOCICLETA              | CONSIDERADO           |
+| MOTONETA                 | CONSIDERADO           |
+| ÔNIBUS                   | CONSIDERADO           |
+| QUADRICICLO              | DESCONSIDERADO        |
+| REBOQUE                  | DESCONSIDERADO        |
+| SIDE-CAR                 | DESCONSIDERADO        |
+| OUTROS                   | DESCONSIDERADO        |
+| TRATOR ESTEIRA           | DESCONSIDERADO        |
+| TRATOR RODAS             | DESCONSIDERADO        |
+| TRICICLO                 | DESCONSIDERADO        |
+| UTILITÁRIO               | CONSIDERADO           |
+
+#### Fator de correção da frota
+
+
+
+#### `Tabela 4`: Correção da `Tabela 3` pelo fator de correção
+
+### Aba `<ESTADO>`: Frota por estado
+
+#### `Tabela 5` e `Tabela 6`: Frota
+
+#### `Tabela 7`: Veículos elétricos
+
+#### Ônibus, Micro-ônibus, Caminhão e Caminhão Trator
+
+#### Motocicleta e Motoneta
+
+#### `Tabela 8`: Utilitaŕios
+
+#### `Tabela 9`: Automóveis
+
+#### `Tabela 10`: Caminhonetes e Camionetas
+
+#### `Tabela 11`: Resumo das frotas por tipo e combustível; por estado
+
+#### Aba `ONSV_<ANO>`: Resultados da frota agregada
+
+## Planilha `Full Data`
+
+### Aba `MOR`: Mortes no Trânsito
+
+### Aba `DEN`: Frota por tipo de veículo
+
+### Aba `POP`: População Brasileira
+
+### Aba `COMB`: Consumo de combustível
+
+#### `Tabela 12`: Fatores de Correção - Diesel - `CORR-DSL`
+
+#### Fator de Correção 1: Valor Nacional - `BEN`
+
+#### Fator de Correção 2: Transformação - `BEN`
+
+#### Fator de Correção 3: Setor Energético - `BEN`
+
+#### Fator de Correção 4: Comercial - `BEN`
+
+#### Fator de Correção 5: Setor Público - `BEN`
+
+#### Fator de Correção 6: Setor Industrial - `BEN`
+
+#### Fator de Correção 7: Diesel Agropecuário - Aba `AGRO_DSL`
+
+#### Fator de Correção 8: Diesel Ferroviário - Aba `FERRO_DSL`
+
+#### Fator de Correção 9: Diesel Hidroviário - Aba `HIDRO_DSL`
+
+### Fator de Correção do Álcool: `CORR_ALC`
+
+#### Fator de Correção 1: Valor Nacional - `CORR_ALC`
+
+#### Fator de Correção 2: Consumo não energético - `CORR_ALC`
+
+#### Fatores de Correção: Aba `CORR`
+
+### Aba `GNV`: Gás Natural Veicular
+
+### Aba `COMB_CORR`: Combustível Corrigidos
+
+### Flex
+
+### Aba `TAX`: Taxa de consumo de combustível
+
+### Aba `KM-ANO`: Quilometragem percorrida
+
+### Distribuição dos veículos conforme os combustíveis
+
+#### Aba `DIST_<COMB>_<VEIC>`: `Tabela 17`
+
+#### Aba `DIST_<COMB>_<VEIC>`: `Tabela 18`
+
+#### Aba `DIST_<COMB>_TOT`: `Tabela 19`
+
+### Aba `DIST_FROT_TOT`
+
+### Aba `KMA.FROT`: Quilometragem total
+
+### Aba `KMA`: Quilometragem média anual
+
+### Aba `INDICE`: Índice de mortes por bilhão de quilômetros percorridos
