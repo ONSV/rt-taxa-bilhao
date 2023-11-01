@@ -250,25 +250,62 @@ U_{flex} =
     \end{cases}
 $$ {#eq-util}
 
-Em que $U_{flex}$ é a frota de utilitários flex, $U$ é a frota de utilitários, $flex$ é a frota de veículos flex e $P_U$ é a proporção de utilitários.
+Em que $U_{flex}$ é a frota de utilitários flex, $U$ é a frota de utilitários, $flex$ é a frota de veículos flex e $P_U$ é a proporção de utilitários em comparação com a frota automóveis + utilitários.
 
 Por fim, para determinar a quantidade de utilitários à gasolina, basta subtrair os utilitários flex dos utilitários. Lembrando que como os veículos flex operam em álcool e gasolina, ao não haver nenhum veículo à gasolina, isto significa que não há nenhum veículo a gasolina pura.
 
 #### `Tabela 9`: Automóveis
 
+Os automóveis foram divididos em quatro categorias, sendo que todos os veículos à álcool e a GNV foram considerados como automóveis. Para determinar a quantidade de automóveis flex, deve-se realizar o cálculo conforme a @eq-auto-flex, em que algumas condições foram estabelecidas para que não haja uma quantidade superior de automóveis flex do que o disponível em automóveis.
+
+Na @eq-auto-flex, caso a multiplicação da proporção de automóveis pela frota flex resultar maior que a quantidade de automóveis (\textcolor{blue}{Tabela 6}) ou se a soma da quantidade de automóveis a álcool, a GNV e flex resultar superior a quantidade de automóveis, em ambos os casos, haveria um aumento na quantidade da frota. Por isso, nestes dois casos, a quantidade de veículos flex é determinada pela subtração da frota de automóveis (\textcolor{blue}{Tabela 6}) pela frota de automóveis a álcool e a GNV. Dessa forma, não há nenhum automóvel repetido ou faltando e, portanto, não há nenhum automóvel a gasolina pura.
+
+Caso essas condições resultem em um valor inferior a quantidade de automóveis, a quantidade de automóveis flex é determinada pela multiplicação da proporção de automóveis pela frota flex.
+
 $$
 A_{flex} = 
     \begin{cases}
-        A - A_{alcool} - A_{GNV},& \text{se } ((P_{A} \times flex) > A) \vee (A_{alcool} + A_{GNV} + (P_{A} \times flex) > A)
+        A - A_{alcool} - A_{GNV},& \text{se } (P_{A} \times flex > A) \vee (A_{alcool} + A_{GNV} + P_{A} \times flex > A) \\
+        flex \times P_A,& \text{caso contrário}
     \end{cases}
-$$
+$$ {#eq-auto-flex}
 
+Notação:
+
+- $A$: Frota total de automóveis
+- $A_{flex}$: Frota de automóveis flex
+- $A_{alcool}$: Frota de automóveis à álcool
+- $A_{GNV}$: Frota de automóveis à GNV
+- $P_{A}$: Proporção de automóveis em comparação com a frota automóveis + utilitários 
+
+O valor de automóveis à gasolina é obtido por meio da @eq-auto-gas, podendo retornar positivo ou nulo. O cálculo apresenta a seguinte condição, caso subtração da quantidade de automóveis pela quantidade da frota de automóveis a álcool, a GNV e flex resulte negativa, não há automóveis a gasolina. No entanto, caso o resultado seja positivo, este valor representa a quantidade de automóveis a gasolina.
+
+$$
+A_{gasolina} = 
+    \begin{cases}
+        0,& \text{se } A - A_{alcool} - A_{flex} - A_{GNV} < 0 \\
+        A_{alcool} - A_{flex} - A_{GNV},& \text{caso contrário}
+    \end{cases}
+$$ {#eq-auto-gas}
 
 #### `Tabela 10`: Caminhonetes e Camionetas
 
+As caminhonetes e as camionetas foram divididas em elétricas, a gasolina e a diesel. Na \textcolor{blue}{Tabela 10}, incialmente, é necessário determinar a frota de diesel disponível ($diesel_{disp}$), visto que outros veículos utilizam apenas diesel (caminhão, caminhão trator, micro-ônibus e ônibus; presentes na \textcolor{blue}{Tabela 6}), isto é calculado pela @eq-diesel-disp, com a subtração entre a frota total a $diesel$ e os tipos previamente descritos
+
+$$
+diesel_{disp} = diesel - caminhao - caminhao\text{-}trator - micro\text{-}onibus - onibus
+$$ {#eq-diesel-disp}
+
+Em seguida, é realizada a mesma proporção que foi realizada anteriomente (para os automóveis e utilitários), para caminhonetes e camionetas já descontando a parcela que é elétrica de ambos os veículos. O próximo passo consiste em determinar a quantidade de caminhonetes e camionetas que são à gasolina, subtraindo a frota total destes tipos pelas quantias que são à diesel.
+
 #### `Tabela 11`: Resumo das frotas por tipo e combustível; por estado
 
+A \textcolor{blue}{Tabela 11} apresenta o resultado de cada tipo de veículo por tipo de combustível em cada estado e ano.
+
 #### Aba `ONSV_<ANO>`: Resultados da frota agregada
+
+Nesta aba, encontra-se os resultados agrupados pela categoria veicular e tipo de
+combustível por estado. Deve-se inserir esta aba na Planilha `Full Data`.
 
 ## Planilha `Full Data`
 
