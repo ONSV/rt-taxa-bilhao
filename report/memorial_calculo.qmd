@@ -112,7 +112,7 @@ tibble(tipo_comb = tipo_comb, tipo_considerado = tipo_considerado) |>
 
 ```
 
-#### `Tabela 3`: Frota por tipo de veículo
+#### `Tabela 3`: Frota por tipo de veículo {#sec-tab3}
 
 Em seguida, utilizou-se os dados do RENAVAM referentes a categoria de veículos para realizar uma seleção das categorias de veículos relevantes para esta pesquisa. No Quadro 2, estão representadas as categorias e quais foram considerados ou desconsiderados. Assim, nesta pesquisa as categorias consideradas são: automóvel, caminhão, caminhão trator, caminhonete, camioneta, micro-ônibus, motocicleta, motoneta, ônibus e utilitário. Na planilha, deve-se preencher a \textcolor{blue}{Tabela 3} apenas com as categorias consideradas.
 
@@ -203,7 +203,9 @@ Em seguida, foi necessário considerar algumas premissas para encontrar a quanti
 |                      | ELÉTRICO            |
 +----------------------+---------------------+
 
-Foi realizado alguns procedimentos e verificou-se que com estas premissas, é possível calcular a frota. Nas próximas seções, encontra-se a metodologia que deve ser utilizada para determinar a frota por tipo de combustível e por tipo de veículo para cada estado. A variação que pode haver de estado para estado é a presença ou não da gasolina nos veículos de passeio2. Assim, cada estado em cada ano possui uma \textcolor{blue}{Caixa de Texto} na planilha onde está especificado conforme o uso ou não dos combustíveis para cada tipo de veículo.
+Foi realizado alguns procedimentos e verificou-se que com estas premissas, é possível calcular a frota. Nas próximas seções, encontra-se a metodologia que deve ser utilizada para determinar a frota por tipo de combustível e por tipo de veículo para cada estado. A variação que pode haver de estado para estado é a presença ou não da gasolina nos veículos de passeio[^2]. Assim, cada estado em cada ano possui uma \textcolor{blue}{Caixa de Texto} na planilha onde está especificado conforme o uso ou não dos combustíveis para cada tipo de veículo.
+
+[^2]: Automóveis, utilitários, caminhonetes e camionetas.
 
 #### `Tabela 5` e `Tabela 6`: Frota
 
@@ -311,11 +313,42 @@ combustível por estado. Deve-se inserir esta aba na Planilha `Full Data`.
 
 ### Aba `MOR`: Mortes no Trânsito
 
+As informações sobre as mortes no trânsito foram obtidas por meio do Departamento de Informática do Sistema Único de Saúde (DATASUS)[^3]. Selecionou-se os óbitos por ocorrência dentro dos seguintes grupos CID10:
+
+- Pedestre traumatizado em um acidente de transporte;
+- Ciclista traumatizado em um acidente de transporte;
+- Motociclistas traumatizado em um acidente de transporte;
+- Ocupante triciclo motorizado traumatizado em acidente de transporte;
+- Ocupante automóvel traumatizado em acidente de transporte;
+- Ocupante caminhonete traumatizado em acidente de transporte;
+- Ocupante de veículo de transporte pesado traumatizado em acidente de
+transporte;
+- Ocupante de ônibus traumatizado em acidente de transporte;
+- Outros acidentes de transporte terrestre.
+
+[^3]: Disponível em: [https://datasus.saude.gov.br/mortalidade-desde-1996-pela-cid-10](https://datasus.saude.gov.br/mortalidade-desde-1996-pela-cid-10)
+
 ### Aba `DEN`: Frota por tipo de veículo
+
+As informações referentes a frota por tipo de veículo estão no site da Secretária Nacional de trânsito. Deve-se realizar o mesmo procedimento da @sec-tab3
 
 ### Aba `POP`: População Brasileira
 
+Nesta aba, há a população para cada ano conforme os dados do Instituto Brasileiro de Geografia e Estatística (IBGE). Deve-se utilizar os dados do Censo 2010[^4] e para os demais anos utiliza-se as estimativas do CGU[^5]
+
+[^4]: Disponível em: [https://www.ibge.gov.br/estatisticas/sociais/populacao/9662-censo-demografico-2010.html?edicao=9673](https://www.ibge.gov.br/estatisticas/sociais/populacao/9662-censo-demografico-2010.html?edicao=9673)
+
+[^5]: Disponível em: [https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html](https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html).
+
 ### Aba `COMB`: Consumo de combustível
+
+Nesta pesquisa, foi necessário encontrar a quantidade de cada combustível comercializado em cada ano por estado. Os combustíveis mais utilizados pela frota brasileira de veículos são o óleo diesel, o álcool hidratado, a gasolina e o Gás Natural Veicular. Por isso, esses tipos foram considerados nesta pesquisa e foram realizados os procedimentos a seguir para encontrar o consumo individual destes combustíveis.
+
+Os dados da quantidade de combustível vendida para cada estado em cada ano são disponibilizados pela Agência Nacional do Petróleo, Gás Natural e Biocombustíveis (ANP)[^6]. Na seção \textcolor{blue}{Vendas de derivados de petróleo e biocombustíveis}, deve-se baixar a planilha \textcolor{blue}{Vendas, pelas distribuidoras, dos derivados combustíveis de petróleo (metros cúbicos)}, que contém o tipo de combustível por estado, mas pode-se encontrar também as planilhas separadas por combustível e município, além disso deve-se realizar a conversão para litros já que os valores estão em metro cúbico (1m³ = 1.000L).
+
+A partir de 2013, a ANP não disponibilizou os dados sobre a venda do gás natural veicular, assim, houve a necessidade de utilizar dados antigos para estimar a quantidade vendida atualmente. Além disso, apesar da maioria dos volumes de combustíveis comercializados serem destinados ao transporte rodoviário, ainda há outros usos conforme o tipo de combustível. Por isso, foi necessário aplicar alguns fatores de correção.
+
+[^6]: Disponível em: [https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-estatisticos](https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-estatisticos)
 
 #### `Tabela 12`: Fatores de Correção - Diesel - `CORR-DSL`
 
