@@ -17,7 +17,6 @@ library(gt)
 library(tidyverse)
 ```
 
-
 ## Objetivos e escopo do documento
 
 O presente documento tem como objetivo apresentar a metodologia utilizada para estimar o valor do índice de mortes por quilômetro percorrida pela frota de veículos rodoviários no Brasil e em cada estado da federação durante a 1° Década de Ação pela Segurança no Trânsito (2011-2021) com o intuito de obter um diagnóstico atualizado e mais preciso acerca da evolução do desempenho da segurança viária no país.
@@ -213,21 +212,19 @@ As \textcolor{blue}{Tabelas 5} e \textcolor{blue}{6} correspondem, respectivamen
 
 #### `Tabela 7`: Veículos elétricos
 
-Nesta pesquisa, apenas o automóvel, a caminhonete, a camioneta e o utilitário
-apresentaram a modalidade elétrica. Assim, para determinar a quantidade destes veículos, deve-se calcular, primeiramente, a quantidade total de veículos de passeio $VP_t$, ou seja, todos os veículos que possuem uma parcela elétrica (@eq-vpt).
+Nesta pesquisa, apenas o automóvel, a caminhonete, a camioneta e o utilitário apresentaram a modalidade elétrica. Assim, para determinar a quantidade destes veículos, deve-se calcular, primeiramente, a quantidade total de veículos de passeio $VP_t$, ou seja, todos os veículos que possuem uma parcela elétrica (@eq-vpt).
 
 $$
 VP_t = Automoveis + Caminhonetes + Camionetas + Utilitários
 $$ {#eq-vpt}
 
-Em seguida, deve-se extrair a proporção destes veículos, isto é, calcular a
-porcentagem que cada categoria possui do resultado da @eq-vpt por meio da @eq-elec. Aqui, $P_{tipo}$ representa essa proportção, $F_{tipo}$ representa o tamanho da frota $tipo$ e $F_{elec}$ representa o tamanho da frota de veículos elétricos.
+Em seguida, deve-se extrair a proporção destes veículos, isto é, calcular a porcentagem que cada categoria possui do resultado da @eq-vpt por meio da @eq-elec. Aqui, $P_{tipo}$ representa essa proportção, $F_{tipo}$ representa o tamanho da frota $tipo$ e $F_{elec}$ representa o tamanho da frota de veículos elétricos.
 
 $$
 P_{tipo} = \frac{F_{tipo}}{F_{elec}}
 $$ {#eq-elec}
 
-Assim, ao multiplicar os resultados da @eq-elec com o valor da frota elétrica (\textcolor{blue}{Tabela 5]), tem-se a quantidade de veículos elétricos para cada categoria. A quantidade de veículos para cada categoria desconsiderando os modelos elétricos é determinada pela subtração da segunda coluna da \textcolor{blue}{Tabela 6] pelo resultado da multiplicação da @eq-vpt pela frota elétrica (\textcolor{blue}{Tabela 5}) para cada categoria, apresentando o resultado na terceira coluna da \textcolor{blue}{Tabela 6}.
+Assim, ao multiplicar os resultados da @eq-elec com o valor da frota elétrica \textcolor{blue}{Tabela 5}, tem-se a quantidade de veículos elétricos para cada categoria. A quantidade de veículos para cada categoria desconsiderando os modelos elétricos é determinada pela subtração da segunda coluna da \textcolor{blue}{Tabela 6} pelo resultado da multiplicação da @eq-vpt pela frota elétrica (\textcolor{blue}{Tabela 5}) para cada categoria, apresentando o resultado na terceira coluna da \textcolor{blue}{Tabela 6}.
 
 #### Ônibus, Micro-ônibus, Caminhão e Caminhão Trator
 
@@ -241,8 +238,7 @@ A frota de motocicleta e motoneta foi considerada apenas com a gasolina, portant
 
 Os veículos utilitários foram divididos em flex e gasolina. Como os automóveis também foram considerados flex, é necessário incluir os dados dos automóveis para determinar a quantidade de utilitários flex. O primeiro passo consiste em calcular o total de automóveis e utilitários. Em seguida, deve-se calcular a proporção de automóveis e utilitários em relação a soma de ambos.
 
-Dependendo do estado, esta proporção pode ou não ser utilizada para determinar a quantidade de utilitários flex. Há algumas condições que devem ser impostas para não haver um resultado negativo para a quantidade de veículos flex: se a multiplicação da porcentagem de utilitários pela frota flex (álcool/gasolina) for superior a quantidade total de utilitários, deve-se considerar que a quantidade total de utilitários é totalmente flex, sem a parcela da gasolina. Caso contrário, se a multiplicação da porcentagem de utilitários pela
-frota flex (álcool/gasolina) for inferior a quantidade total de utilitários, deve-se utilizar o resultado desta multiplicação para a quantidade de utilitários flex. Este cálculo está representado na @eq-util.
+Dependendo do estado, esta proporção pode ou não ser utilizada para determinar a quantidade de utilitários flex. Há algumas condições que devem ser impostas para não haver um resultado negativo para a quantidade de veículos flex: se a multiplicação da porcentagem de utilitários pela frota flex (álcool/gasolina) for superior a quantidade total de utilitários, deve-se considerar que a quantidade total de utilitários é totalmente flex, sem a parcela da gasolina. Caso contrário, se a multiplicação da porcentagem de utilitários pela frota flex (álcool/gasolina) for inferior a quantidade total de utilitários, deve-se utilizar o resultado desta multiplicação para a quantidade de utilitários flex. Este cálculo está representado na @eq-util.
 
 $$
 U_{flex} = 
@@ -274,11 +270,11 @@ $$ {#eq-auto-flex}
 
 Notação:
 
-- $A$: Frota total de automóveis
-- $A_{flex}$: Frota de automóveis flex
-- $A_{alcool}$: Frota de automóveis à álcool
-- $A_{GNV}$: Frota de automóveis à GNV
-- $P_{A}$: Proporção de automóveis em comparação com a frota automóveis + utilitários 
+-   $A$: Frota total de automóveis
+-   $A_{flex}$: Frota de automóveis flex
+-   $A_{alcool}$: Frota de automóveis à álcool
+-   $A_{GNV}$: Frota de automóveis à GNV
+-   $P_{A}$: Proporção de automóveis em comparação com a frota automóveis + utilitários
 
 O valor de automóveis à gasolina é obtido por meio da @eq-auto-gas, podendo retornar positivo ou nulo. O cálculo apresenta a seguinte condição, caso subtração da quantidade de automóveis pela quantidade da frota de automóveis a álcool, a GNV e flex resulte negativa, não há automóveis a gasolina. No entanto, caso o resultado seja positivo, este valor representa a quantidade de automóveis a gasolina.
 
@@ -306,8 +302,7 @@ A \textcolor{blue}{Tabela 11} apresenta o resultado de cada tipo de veículo por
 
 #### Aba `ONSV_<ANO>`: Resultados da frota agregada
 
-Nesta aba, encontra-se os resultados agrupados pela categoria veicular e tipo de
-combustível por estado. Deve-se inserir esta aba na Planilha `Full Data`.
+Nesta aba, encontra-se os resultados agrupados pela categoria veicular e tipo de combustível por estado. Deve-se inserir esta aba na Planilha `Full Data`.
 
 ## Planilha `Full Data`
 
@@ -315,18 +310,17 @@ combustível por estado. Deve-se inserir esta aba na Planilha `Full Data`.
 
 As informações sobre as mortes no trânsito foram obtidas por meio do Departamento de Informática do Sistema Único de Saúde (DATASUS)[^3]. Selecionou-se os óbitos por ocorrência dentro dos seguintes grupos CID10:
 
-- Pedestre traumatizado em um acidente de transporte;
-- Ciclista traumatizado em um acidente de transporte;
-- Motociclistas traumatizado em um acidente de transporte;
-- Ocupante triciclo motorizado traumatizado em acidente de transporte;
-- Ocupante automóvel traumatizado em acidente de transporte;
-- Ocupante caminhonete traumatizado em acidente de transporte;
-- Ocupante de veículo de transporte pesado traumatizado em acidente de
-transporte;
-- Ocupante de ônibus traumatizado em acidente de transporte;
-- Outros acidentes de transporte terrestre.
+[^3]: Disponível em: <https://datasus.saude.gov.br/mortalidade-desde-1996-pela-cid-10>
 
-[^3]: Disponível em: [https://datasus.saude.gov.br/mortalidade-desde-1996-pela-cid-10](https://datasus.saude.gov.br/mortalidade-desde-1996-pela-cid-10)
+-   Pedestre traumatizado em um acidente de transporte;
+-   Ciclista traumatizado em um acidente de transporte;
+-   Motociclistas traumatizado em um acidente de transporte;
+-   Ocupante triciclo motorizado traumatizado em acidente de transporte;
+-   Ocupante automóvel traumatizado em acidente de transporte;
+-   Ocupante caminhonete traumatizado em acidente de transporte;
+-   Ocupante de veículo de transporte pesado traumatizado em acidente de transporte;
+-   Ocupante de ônibus traumatizado em acidente de transporte;
+-   Outros acidentes de transporte terrestre.
 
 ### Aba `DEN`: Frota por tipo de veículo
 
@@ -336,9 +330,9 @@ As informações referentes a frota por tipo de veículo estão no site da Secre
 
 Nesta aba, há a população para cada ano conforme os dados do Instituto Brasileiro de Geografia e Estatística (IBGE). Deve-se utilizar os dados do Censo 2010[^4] e para os demais anos utiliza-se as estimativas do CGU[^5]
 
-[^4]: Disponível em: [https://www.ibge.gov.br/estatisticas/sociais/populacao/9662-censo-demografico-2010.html?edicao=9673](https://www.ibge.gov.br/estatisticas/sociais/populacao/9662-censo-demografico-2010.html?edicao=9673)
+[^4]: Disponível em: <https://www.ibge.gov.br/estatisticas/sociais/populacao/9662-censo-demografico-2010.html?edicao=9673>
 
-[^5]: Disponível em: [https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html](https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html).
+[^5]: Disponível em: <https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html>.
 
 ### Aba `COMB`: Consumo de combustível
 
@@ -346,29 +340,111 @@ Nesta pesquisa, foi necessário encontrar a quantidade de cada combustível come
 
 Os dados da quantidade de combustível vendida para cada estado em cada ano são disponibilizados pela Agência Nacional do Petróleo, Gás Natural e Biocombustíveis (ANP)[^6]. Na seção \textcolor{blue}{Vendas de derivados de petróleo e biocombustíveis}, deve-se baixar a planilha \textcolor{blue}{Vendas, pelas distribuidoras, dos derivados combustíveis de petróleo (metros cúbicos)}, que contém o tipo de combustível por estado, mas pode-se encontrar também as planilhas separadas por combustível e município, além disso deve-se realizar a conversão para litros já que os valores estão em metro cúbico (1m³ = 1.000L).
 
-A partir de 2013, a ANP não disponibilizou os dados sobre a venda do gás natural veicular, assim, houve a necessidade de utilizar dados antigos para estimar a quantidade vendida atualmente. Além disso, apesar da maioria dos volumes de combustíveis comercializados serem destinados ao transporte rodoviário, ainda há outros usos conforme o tipo de combustível. Por isso, foi necessário aplicar alguns fatores de correção.
+[^6]: Disponível em: <https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-estatisticos>
 
-[^6]: Disponível em: [https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-estatisticos](https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-estatisticos)
+A partir de 2013, a ANP não disponibilizou os dados sobre a venda do gás natural veicular, assim, houve a necessidade de utilizar dados antigos para estimar a quantidade vendida atualmente. Além disso, apesar da maioria dos volumes de combustíveis comercializados serem destinados ao transporte rodoviário, ainda há outros usos conforme o tipo de combustível. Por isso, foi necessário aplicar alguns fatores de correção.
 
 #### `Tabela 12`: Fatores de Correção - Diesel - `CORR-DSL`
 
+Para os fatores de correção relacionados a valor nacional, transformação, setor energético, setor comercial, setor público e setor industrial, foi necessário utilizar os dados fornecidos pela Empresa de Pesquisa Energética (EPE) que anualmente elabora um relatório com o Balanço Energético Nacional[^7]. Neste relatório encontra-se a "Tabela 2.19" (@fig-diesel) onde estão os valores para poder determinar os fatores de correção.
+
+[^7]: Disponível em: <https://www.epe.gov.br/pt/publicacoes-dados-abertos/publicacoes/balanco-energetico-nacional-ben>
+
+Nesta tabela, o consumo total corresponde ao valor nacional. Na aba `CORR_DSL`, há a \textcolor{blue}{Tabela 12} que deve ser preenchida com os valores referentes ao Brasil da @fig-diesel.
+
+![Óleo diesel total](images/Screenshot from 2023-11-01 14-59-21.png){#fig-diesel fig-align="center" width="400"}
+
 #### Fator de Correção 1: Valor Nacional - `BEN`
+
+Para calcular o Fator de Correção 1 ($FC_1$) que é referente ao valor nacional apresentado na @fig-diesel como consumo total em 10³ m³, deve-se multiplicar este valor por 1.000.000 para transformar em litros. Além disso, deve-se calcular a proporção que cada estado contribuiu nas vendas da ANP em cada ano e, assim, seguir a @eq-anp.
+
+$$
+FC_1 = \frac{P_{ANP} \times valor\text{-}nacional}{ANP}
+$$ {#eq-anp}
 
 #### Fator de Correção 2: Transformação - `BEN`
 
+Para calcular o Fator de Correção 2 ($FC_2$) que é referente a transformação apresentada na @fig-diesel em 10³ m³, deve-se multiplicar este valor por 1.000.000 para transformar em litros. Além disso, deve-se calcular a proporção que cada estado contribuiu nas vendas da ANP em cada ano e, assim, seguir a @eq-anp2.
+
+$$
+FC_2 = 1 - \frac{P_{ANP} \times transformacao}{ANP}
+$$ {#eq-anp2}
+
 #### Fator de Correção 3: Setor Energético - `BEN`
+
+Para calcular o fator de correção 3 ($FC_3$) que é referente ao setor energético apresentado na @fig-diesel em 10³ m³, deve-se multiplicar este valor por 1.000.000 para transformar em litros. Além disso, deve-se calcular a proporção que cada estado contribuiu nas vendas da ANP em cada ano e, assim, seguir a @eq-anp3.
+
+$$
+FC_3 = 1 - \frac{P_{ANP} \times setor\text{-}energetico}{ANP}
+$$ {#eq-anp3}
 
 #### Fator de Correção 4: Comercial - `BEN`
 
+Para calcular o fator de correção 4 ($FC_4$) que é referente ao setor energético apresentado na @fig-diesel em 10³ m³, deve-se multiplicar este valor por 1.000.000 para transformar em litros. Além disso, deve-se calcular a proporção que cada estado contribuiu nas vendas da ANP em cada ano e, assim, seguir a @eq-anp4.
+
+$$
+FC_4 = 1 - \frac{P_{ANP} \times comercial}{ANP}
+$$ {#eq-anp4}
+
 #### Fator de Correção 5: Setor Público - `BEN`
+
+Para calcular o fator de correção 5 ($FC_5$) que é referente ao setor energético apresentado na @fig-diesel em 10³ m³, deve-se multiplicar este valor por 1.000.000 para transformar em litros. Além disso, deve-se calcular a proporção que cada estado contribuiu nas vendas da ANP em cada ano e, assim, seguir a @eq-anp5.
+
+$$
+FC_5 = 1 - \frac{P_{ANP} \times setor\text{-}publico}{ANP}
+$$ {#eq-anp5}
 
 #### Fator de Correção 6: Setor Industrial - `BEN`
 
+Para calcular o fator de correção 6 ($FC_6$) que é referente ao setor energético apresentado na @fig-diesel em 10³ m³, deve-se multiplicar este valor por 1.000.000 para transformar em litros. Além disso, deve-se calcular a proporção que cada estado contribuiu nas vendas da ANP em cada ano e, assim, seguir a @eq-anp3.
+
+$$
+FC_6 = 1 - \frac{P_{ANP} \times setor\text{-}industrial}{ANP}
+$$ {#eq-anp6}
+
 #### Fator de Correção 7: Diesel Agropecuário - Aba `AGRO_DSL`
+
+Nesta aba, há o fator de correção do diesel que é destinado à agropecuária. O valor relacionado a agropecuária encontra-se na @fig-diesel deste relatório em 10 m³, portanto deve-se realizar a transformação para litros. No entanto, como este valor é para todo o Brasil, foi necessário utilizar os dados mais recentes de venda de óleo diesel destinada a agropecuária por estado elaborado no Censo Agropecuário de 2006[^8], os valores encontram-se na página 561, na coluna óleo diesel e quantidade (1000 L). Assim, foi calculada uma proporção para determinar a parcela que cada estado possui na quantidade de litros vendidos. Seguindo a @eq-fc7, ao subtrair do total de óleo diesel comercializado no Brasil (Aba `COMB`) com a multiplicação desta percentagem pelo diesel agropecuário (Tabela 2.19) e dividir pelo óleo diesel comercializado no Brasil (Aba `COMB`), tem-se a quantidade de litros de óleo diesel destinado para agropecuária por estado.
+
+$$
+FC_7 = \frac{D_{venda} - P_{2006} \times D_{agro}}{D_{venda}} 
+$$ {#eq-fc7}
+
+Em que:
+
+- $D_{venda}$: Venda de óleo diesel (Aba `COMB`)
+- $P_{2006}$: Proporção estadual da venda de óleo diesel destinada à agropecurária
+- $D_{agro}$: Venda de diesel agropecuário
+
+[^8]: Disponível em: <https://ftp.ibge.gov.br/Censo_Agropecuario/Censo_Agropecuario_2006/Segunda_Apuracao/censoagro2006_2aapuracao.pdf>
 
 #### Fator de Correção 8: Diesel Ferroviário - Aba `FERRO_DSL`
 
+Para calcular o fator de correção 8 ($FC_8$) que é referente ao transporte ferroviário apresentado na @fig-diesel em 10³ m³, deve-se multiplicar este valor por 1.000.000 para transformar em litros. Como este valor é para todo o Brasil, precisa-se determinar quanto que cada estado vendeu em cada ano. Isto foi realizado com base na extensão de ferrovias que cada estado possui, conforme o IPEA[^9]. O cálculo deste fator de correção está na @eq-fc8.
+
+$$
+FC_8 = \frac{D_{venda} - P_{ferrovia} \times D_{ferrovias}}{D_{venda}}
+$$ {#eq-fc8}
+
+- $D_{venda}$: Venda de óleo diesel (Aba `COMB`)
+- $P_{ferrovia}$: Proporção estadual da extensào rodoviária
+- $D_{ferrovias}$: Venda de diesel ferroviário
+
+[^9]: Disponível em: <https://www.ipea.gov.br/presenca/index.php?option=com_content&view=article&id=28&Itemid=18>
+
 #### Fator de Correção 9: Diesel Hidroviário - Aba `HIDRO_DSL`
+
+Para calcular o fator de correção 9 ($FC_9$) que é referente ao transporte hidroviário apresentado na @fig-diesel em 10³ m³, deve-se multiplicar este valor por 1.000.000 para transformar em litros. Da mesma forma que os fatores de correção anteriores, é necessário determinar a malha hidroviária[^10] para cada estado, coletada do site do DNIT.
+
+$$
+FC_9 = \frac{D_{venda} - P_{hidro} \times D_{ferrovias}}{D_{venda}}
+$$ {#eq-fc9}
+
+- $D_{venda}$: Venda de óleo diesel (Aba `COMB`)
+- $P_{hidro}$: Proporção estadual da extensào hidroviária
+- $D_{hidro}$: Venda de diesel hidroviário
+
+[^10]: Disponível em <http://servicos.dnit.gov.br/dnitcloud/index.php/s/oTpPRmYs5AAdiNr>
 
 ### Fator de Correção do Álcool: `CORR_ALC`
 
