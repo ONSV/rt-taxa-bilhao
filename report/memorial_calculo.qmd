@@ -352,7 +352,7 @@ Para os fatores de correção relacionados a valor nacional, transformação, se
 
 Nesta tabela, o consumo total corresponde ao valor nacional. Na aba `CORR_DSL`, há a \textcolor{blue}{Tabela 12} que deve ser preenchida com os valores referentes ao Brasil da @fig-diesel.
 
-![Óleo diesel total](images/Screenshot from 2023-11-01 14-59-21.png){#fig-diesel fig-align="center" width="400"}
+![Óleo diesel total](images/Screenshot%20from%202023-11-01%2014-59-21.png){#fig-diesel fig-align="center" width="400"}
 
 #### Fator de Correção 1: Valor Nacional - `BEN`
 
@@ -406,53 +406,79 @@ $$ {#eq-anp6}
 
 Nesta aba, há o fator de correção do diesel que é destinado à agropecuária. O valor relacionado a agropecuária encontra-se na @fig-diesel deste relatório em 10 m³, portanto deve-se realizar a transformação para litros. No entanto, como este valor é para todo o Brasil, foi necessário utilizar os dados mais recentes de venda de óleo diesel destinada a agropecuária por estado elaborado no Censo Agropecuário de 2006[^8], os valores encontram-se na página 561, na coluna óleo diesel e quantidade (1000 L). Assim, foi calculada uma proporção para determinar a parcela que cada estado possui na quantidade de litros vendidos. Seguindo a @eq-fc7, ao subtrair do total de óleo diesel comercializado no Brasil (Aba `COMB`) com a multiplicação desta percentagem pelo diesel agropecuário (Tabela 2.19) e dividir pelo óleo diesel comercializado no Brasil (Aba `COMB`), tem-se a quantidade de litros de óleo diesel destinado para agropecuária por estado.
 
+[^8]: Disponível em: <https://ftp.ibge.gov.br/Censo_Agropecuario/Censo_Agropecuario_2006/Segunda_Apuracao/censoagro2006_2aapuracao.pdf>
+
 $$
 FC_7 = \frac{D_{venda} - P_{2006} \times D_{agro}}{D_{venda}} 
 $$ {#eq-fc7}
 
 Em que:
 
-- $D_{venda}$: Venda de óleo diesel (Aba `COMB`)
-- $P_{2006}$: Proporção estadual da venda de óleo diesel destinada à agropecurária
-- $D_{agro}$: Venda de diesel agropecuário
-
-[^8]: Disponível em: <https://ftp.ibge.gov.br/Censo_Agropecuario/Censo_Agropecuario_2006/Segunda_Apuracao/censoagro2006_2aapuracao.pdf>
+-   $D_{venda}$: Venda de óleo diesel (Aba `COMB`)
+-   $P_{2006}$: Proporção estadual da venda de óleo diesel destinada à agropecurária
+-   $D_{agro}$: Venda de diesel agropecuário
 
 #### Fator de Correção 8: Diesel Ferroviário - Aba `FERRO_DSL`
 
 Para calcular o fator de correção 8 ($FC_8$) que é referente ao transporte ferroviário apresentado na @fig-diesel em 10³ m³, deve-se multiplicar este valor por 1.000.000 para transformar em litros. Como este valor é para todo o Brasil, precisa-se determinar quanto que cada estado vendeu em cada ano. Isto foi realizado com base na extensão de ferrovias que cada estado possui, conforme o IPEA[^9]. O cálculo deste fator de correção está na @eq-fc8.
 
+[^9]: Disponível em: <https://www.ipea.gov.br/presenca/index.php?option=com_content&view=article&id=28&Itemid=18>
+
 $$
 FC_8 = \frac{D_{venda} - P_{ferrovia} \times D_{ferrovias}}{D_{venda}}
 $$ {#eq-fc8}
 
-- $D_{venda}$: Venda de óleo diesel (Aba `COMB`)
-- $P_{ferrovia}$: Proporção estadual da extensào rodoviária
-- $D_{ferrovias}$: Venda de diesel ferroviário
-
-[^9]: Disponível em: <https://www.ipea.gov.br/presenca/index.php?option=com_content&view=article&id=28&Itemid=18>
+-   $D_{venda}$: Venda de óleo diesel (Aba `COMB`)
+-   $P_{ferrovia}$: Proporção estadual da extensào rodoviária
+-   $D_{ferrovias}$: Venda de diesel ferroviário
 
 #### Fator de Correção 9: Diesel Hidroviário - Aba `HIDRO_DSL`
 
 Para calcular o fator de correção 9 ($FC_9$) que é referente ao transporte hidroviário apresentado na @fig-diesel em 10³ m³, deve-se multiplicar este valor por 1.000.000 para transformar em litros. Da mesma forma que os fatores de correção anteriores, é necessário determinar a malha hidroviária[^10] para cada estado, coletada do site do DNIT.
 
+[^10]: Disponível em <http://servicos.dnit.gov.br/dnitcloud/index.php/s/oTpPRmYs5AAdiNr>
+
 $$
 FC_9 = \frac{D_{venda} - P_{hidro} \times D_{ferrovias}}{D_{venda}}
 $$ {#eq-fc9}
 
-- $D_{venda}$: Venda de óleo diesel (Aba `COMB`)
-- $P_{hidro}$: Proporção estadual da extensào hidroviária
-- $D_{hidro}$: Venda de diesel hidroviário
-
-[^10]: Disponível em <http://servicos.dnit.gov.br/dnitcloud/index.php/s/oTpPRmYs5AAdiNr>
+-   $D_{venda}$: Venda de óleo diesel (Aba `COMB`)
+-   $P_{hidro}$: Proporção estadual da extensào hidroviária
+-   $D_{hidro}$: Venda de diesel hidroviário
 
 ### Fator de Correção do Álcool: `CORR_ALC`
 
+Para os fatores de correção do álcool relacionados ao valor nacional e ao consumo não energético, foi necessário utilizar os dados fornecidos pela Empresa de Pesquisa Energética (EPE) que anualmente elabora um relatório com o Balanço Energético Nacional[^11]. Neste relatório há a Tabela 2.32 (@fig-alcool), onde estão os valores para poder determinar os fatores de correção. Ao final da Aba, há \textcolor{blue}{Tabela 13 "Outros usos do álcool"}, que deve ser preenchida com os dados da @fig-alcool.
+
+![Álcool Hidratado](images/Screenshot from 2023-11-10 16-09-12.png){#fig-alcool fig-align="center" width="500"}
+
+[^11]: Disponível em <https://www.epe.gov.br/sites-pt/publicacoes-dados-abertos/publicacoes/PublicacoesArquivos/publicacao-748/topico-687/BEN2023.pdf>
+
 #### Fator de Correção 1: Valor Nacional - `CORR_ALC`
+
+O valor utilizado para o Valor Nacional encontra-se na @fig-alcool deste relatório, como “consumo total”, em m³, portanto, deve-se passar para litros. Além disso, deve-se calcular qual a porcentagem que cada estado contribuiu nas vendas da ANP em cada ano e, assim, seguir a @eq-alc-nac.
+
+$$
+FC_1 = \frac{A_{nacional} \times P_{estado}}{A_{venda}}
+$$ {#eq-alc-nac}
+
+Em que:
+
+- $A_{nacional}$: Valor nacional do álcool
+- $P_{estado}$: Porcentagem de cada estado nas vendas da ANP
+- $A_{venda}$: Venda de álcool (Aba `COMB`)
 
 #### Fator de Correção 2: Consumo não energético - `CORR_ALC`
 
+Nesta aba encontra-se os fatores de correção do álcool. O valor relacionado ao Consumo Não Energético ($CNE$) encontra-se na @fig-alcool em m³, portanto deve-se passar para litros. Além disso, deve-se calcular a proporção que cada estado contribuiu nas vendas da ANP em cada ano e, assim, seguir a @eq-alc-cen.
+
+$$
+FC_2 = 1 - \frac{CEN}{A_{nacional}}
+$$ {#eq-alc-cen}
+
 #### Fatores de Correção: Aba `CORR`
+
+Nesta aba encontra-se todos os fatores de correção para os combustíveis analisados (álcool e óleo diesel).
 
 ### Aba `GNV`: Gás Natural Veicular
 
