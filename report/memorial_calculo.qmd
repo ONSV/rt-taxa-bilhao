@@ -450,13 +450,13 @@ $$ {#eq-fc9}
 
 Para os fatores de correção do álcool relacionados ao valor nacional e ao consumo não energético, foi necessário utilizar os dados fornecidos pela Empresa de Pesquisa Energética (EPE) que anualmente elabora um relatório com o Balanço Energético Nacional[^11]. Neste relatório há a Tabela 2.32 (@fig-alcool), onde estão os valores para poder determinar os fatores de correção. Ao final da Aba, há \textcolor{blue}{Tabela 13 "Outros usos do álcool"}, que deve ser preenchida com os dados da @fig-alcool.
 
-![Álcool Hidratado](images/Screenshot from 2023-11-10 16-09-12.png){#fig-alcool fig-align="center" width="500"}
-
 [^11]: Disponível em <https://www.epe.gov.br/sites-pt/publicacoes-dados-abertos/publicacoes/PublicacoesArquivos/publicacao-748/topico-687/BEN2023.pdf>
+
+![Álcool Hidratado](images/Screenshot%20from%202023-11-10%2016-09-12.png){#fig-alcool fig-align="center" width="500"}
 
 #### Fator de Correção 1: Valor Nacional - `CORR_ALC`
 
-O valor utilizado para o Valor Nacional encontra-se na @fig-alcool deste relatório, como “consumo total”, em m³, portanto, deve-se passar para litros. Além disso, deve-se calcular qual a porcentagem que cada estado contribuiu nas vendas da ANP em cada ano e, assim, seguir a @eq-alc-nac.
+O valor utilizado para o Valor Nacional encontra-se na @fig-alcool deste relatório, como "consumo total", em m³, portanto, deve-se passar para litros. Além disso, deve-se calcular qual a porcentagem que cada estado contribuiu nas vendas da ANP em cada ano e, assim, seguir a @eq-alc-nac.
 
 $$
 FC_1 = \frac{A_{nacional} \times P_{estado}}{A_{venda}}
@@ -464,9 +464,9 @@ $$ {#eq-alc-nac}
 
 Em que:
 
-- $A_{nacional}$: Valor nacional do álcool
-- $P_{estado}$: Porcentagem de cada estado nas vendas da ANP
-- $A_{venda}$: Venda de álcool (Aba `COMB`)
+-   $A_{nacional}$: Valor nacional do álcool
+-   $P_{estado}$: Porcentagem de cada estado nas vendas da ANP
+-   $A_{venda}$: Venda de álcool (Aba `COMB`)
 
 #### Fator de Correção 2: Consumo não energético - `CORR_ALC`
 
@@ -481,6 +481,34 @@ $$ {#eq-alc-cen}
 Nesta aba encontra-se todos os fatores de correção para os combustíveis analisados (álcool e óleo diesel).
 
 ### Aba `GNV`: Gás Natural Veicular
+
+Como os dados a partir de 2013 não estão mais disponíveis, foi necessário realizar uma regressão linear com os dados disponíveis dos anos anteriores para calcular a quantidade de gás natural veicular vendida nos anos de interesse deste relatório. A tabela a seguir apresenta os dados de Bastos (2014).
+
+| Ano  | GNV [$m^3$] |     Frota |
+|------|-----------------:|----------:|
+| 2004 |    1.585.637.700 |   825.803 |
+| 2005 |    1.935.630.120 | 1.031.943 |
+| 2006 |    2.315.194.640 | 1.304.821 |
+| 2007 |    2.558.266.740 | 1.490.943 |
+| 2008 |    2.424.887.308 | 1.567.269 |
+| 2009 |    2.101.595.310 | 1.618.643 |
+| 2010 |    2.007.264.580 | 1.625.953 |
+| 2011 |    1.971.808.910 | 1.668.058 |
+| 2012 |    1.947.060.300 | 1.694.036 |
+
+: Dados disponíveis de GNV
+
+Como resultado da regressão ajustada, obteve-se a @eq-reg a seguir.
+
+$$
+GNV [m^3] = 436,767 \times frota + 1.471.634.162
+$$ {#eq-reg}
+
+Considerando que a frota a GNV para cada ano e estado já foi calculada anteriormente, ao substituir a frota total na @eq-reg, obtem-se a quantidade de GNV vendida no Brasil em determinado ano. No entanto, por ser para todo o Brasil, é necessário determinar a quantidade para cada estado. Esssa quantidade foi obtida por meio do cálculo de proporção da quantidade de veículos a GNV que cada estado possui (\textcolor{blue}{Tabela 14}). Conforme a @eq-gnv-uf, ao multiplicar a porcentagem de veículos a GNV em cada estado ($P_{veic}$) pela estimativa de GNV vendido no Brasil ($GNV_{br}$), tem-se a quantidade de GNV para cada estado ($GNV_{uf}$).
+
+$$
+GNV_{uf} = GNV_{br} \times P_{veic}
+$$ {#eq-gnv-uf}
 
 ### Aba `COMB_CORR`: Combustível Corrigidos
 
