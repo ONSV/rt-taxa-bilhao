@@ -552,9 +552,61 @@ Nesta aba encontra-se a definição do valor da quilometragem percorrida por ano
 
 #### Aba `DIST_<COMB>_<VEIC>`: `Tabela 17`
 
+Na \textcolor{blue}{Tabela 17} consta a frota que será utilizada para realizar os cálculos. Essa frota consiste na multiplicação da frota de um estado e ano específico conforme a \textcolor{blue}{Aba DEN} pela porcentagen da Frota por tipo de veículo e combustível Junho/<Ano> - \textcolor{blue}{Aba ONSV ANO} -  para a maioria dos combustíveis, exceto para os veículos flex. Para os veículos flex, utiliza-se @eq-flex-alc e @eq-flex-gas; e para os demais utiliza-se a @eq-frota-todos.
+
+A @eq-flex-alc é para os veículos flex à álcool e a @eq-flex-gas é para os veículos flex à gasolina. O 0,95 consiste na parcela que corresponde à 95% dos veículos bicombustíveis que escolhem um tipo de combustível ao outro baseado na \textcolor{blue}{Aba FLEX}.
+
+$$
+flex_{alcool} = F_{senatran} \times P_{onsv} \times \begin{cases}
+        0,05,& \text{se } E_{flex} = gasolina\\
+        0,95,& \text{caso contrário}
+    \end{cases}
+$$ {#eq-flex-alc}
+
+$$
+flex_{gas} = F_{senatran} \times P_{onsv} \times \begin{cases}
+        0,95,& \text{se } E_{flex} = gasolina\\
+        0,05,& \text{caso contrário}
+    \end{cases}
+$$ {#eq-flex-gas}
+
+$$
+frota = F_{senatran} \times P_{onsv}
+$$ {#eq-frota-todos}
+
+Em que:
+
+- $flex_{alcool}$: Frota de veículos flex convertidos para álcool
+
+- $flex_{gas}$: Frota de veículos flex convertidos para gasolina
+
+- $F_{senatran}$: Frota de veículos com base nos dados da SENATRAN
+
+- $P_{onsv}$: Proporção da frota de veículos calculado pelo ONSV
+
 #### Aba `DIST_<COMB>_<VEIC>`: `Tabela 18`
 
+A \textcolor{blue}{Tabela 18} representa os valores consumidos de gasolina ($C_{gasolina}$) em Litros para cada ano e estado. Para isto, deve-se seguir a @eq-consumo.
+
+$$
+C_{gasolina} = \frac{D_{ano} \times frota}{T_{consumo}} 
+$$ {#eq-consumo}
+
+Em que: 
+
+- $D_{ano}$: Distância em quilômetros, percorrida por ano
+
+- $frota$: Dimensão da frota
+
+- $T_{consumo}$: Taxa de consumo
+
 #### Aba `DIST_<COMB>_TOT`: `Tabela 19`
+
+Em seguida, calcula-se a porcentagem de combustível total para cada estado, conforme a \textcolor{blue}{Tabela 19}. Para isto, deve-se seguir a @eq-comb. Após calcular está percentagem para cada combustível, deve-se normalizar os resultados, de modo que a soma da porcentagem consumida pelos veículos de um mesmo combustível, estado e ano resultem em 100%, conforme a \textcolor{blue}{Tabela 20}.
+
+$$
+C_{total} [\%] = \frac{C_{estimado}}{C_{corrigido}}
+$$ {#eq-comb}
 
 ### Aba `DIST_FROT_TOT`
 
