@@ -27,7 +27,7 @@ Este índice é composto pelos três indicadores: o número de mortes em sinistr
 
 A seguir está apresentado o passo a passo necessário para calcular o índice de mortes por bilhão de quilômetros. Para isto, é necessário utilizar duas planilhas. A primeira é intitulada `Full data auxiliar <ANO> – <ANO>` e está relacionada a frota de veículos. A segunda planilha intitulada `Full data <ANO> – <ANO>` apresenta todos os dados necessários para o cálculo do índice, após a adição das abas `ONSV_ANO` da planilha auxiliar.
 
-Nesta planilha, as cédulas em \textcolor{red}{vermelho/laranja} devem ser alteradas, isto é, são inputs, as demais são calculadas automaticamente. As palavras em \textcolor{blue}{azul}, neste relatório, referem-se a arquivos em si, abas ou tabelas da planilha.
+Nesta planilha, as células em \textcolor{red}{vermelho/laranja} devem ser alteradas, isto é, são inputs, as demais são calculadas automaticamente. As palavras em \textcolor{blue}{azul}, neste relatório, referem-se a arquivos em si, abas ou tabelas da planilha.
 
 ## Planilha `Full Data Auxiliar`
 
@@ -608,10 +608,76 @@ $$
 C_{total} [\%] = \frac{C_{estimado}}{C_{corrigido}}
 $$ {#eq-comb}
 
-### Aba `DIST_FROT_TOT`
+#### Aba `DIST_FROT_TOT`
+
+Em seguida, foi agrupado os valores das frotas por tipo de veículo e por combustível.
+
+### Aba `DIST_TOT`
+
+Nesta aba, há a distribuição dos combustíveis para as categorias de veículos.
 
 ### Aba `KMA.FROT`: Quilometragem total
+    
+Nesta aba, encontra-se a quilometragem total percorrida pela frota em cada ano ($D_{total}$) por meio da equação @eq-km-total.
+
+$$
+D_{total} = T_{consumo} \times P_{veic} \times V_{comb}
+$$ {#eq-km-total}
+
+Em que:
+
+- $T_{consumo}$: Taxa de consumo em km/L;
+
+- $P_{veic}$: Distribuição dos combustíveis para as categorias de veículos, em porcentagem
+
+- $V_{comb}$: Venda de combustível corrigida, em litros
 
 ### Aba `KMA`: Quilometragem média anual
 
+Nesta aba, encontra-se a quilometragem média anual ($KMA$) percorrida pela frota em cada ano por meio da @eq-kma.
+
+$$
+KMA = \frac{KM_{total}}{frota_{total}}
+$$ {#eq-kma}
+
 ### Aba `INDICE`: Índice de mortes por bilhão de quilômetros percorridos
+
+Nesta aba, encontra-se o resultado do índice de mortes por bilhão de veículos conforme a @eq-final, em que se multiplica a quantidade de mortes no trânsito por 1 bilhão e divide pela quilometragem total percorrida para cada $uf$ e $ano$. 
+
+$$
+indice = \frac{10^9 \times mortes}{\sum KM_{uf, ano}}
+$$ {#eq-final}
+
+## Referências
+
+BASTOS, J. T. Análise estratégica da segurança viária no Brasil: Pesquisa de índices e indicadores. Tese (Doutorado). Escola de Engenharia de São Carlos da Universidade de São Paulo, 2014. Disponível em: <https://teses.usp.br/teses/disponiveis/18/18144/tde-08042015-103747/pt-br.php>
+
+BASTOS. J. T. Geografia da mortalidade no trânsito no Brasil. Dissertação (Mestrado). Escola de Engenharia de São Carlos da Universidade de São Paulo, 2011. Disponível em: <https://teses.usp.br/teses/disponiveis/18/18144/tde-14032011-112111/pt-br.php>
+
+BRASIL. Agência Nacional de Transportes Terrestres (ANTT). 1º Inventário Nacional de Emissões Atmosféricas por Veículos Automotores Rodoviários. Disponível em: <http://anuario.antt.gov.br/index.php/content/view/5632/1__Inventario_Nacional_de_Emissoes_Atmosfericas_por_Veiculos_Automotores_Rodoviarios.html>
+
+BRASIL. Departamento Nacional de Infraestrutura de Transportes. Hidrovias. Disponível em: <https://servicos.dnit.gov.br/dnitcloud/index.php/s/PSRBrzNP78DAByW>
+
+BRASIL. Instituto de Pesquisa Econômica Aplicada. Transporte Ferroviário. Disponível em: <https://www.ipea.gov.br/presenca/index.php?option=com_content&view=article&id=28&Itemid=18>
+
+BRASIL. Ministério da Economia. Instituto Nacional de Metrologia, Qualidade e Tecnologia (INMETRO). Veículos Automotivos (PBE Veicular). Disponível em: <https://www.gov.br/inmetro/pt-br/assuntos/avaliacao-da-conformidade/programa-brasileiro-de-etiquetagem/tabelas-de-eficiencia-energetica/veiculos-automotivos-pbe-veicular>
+
+BRASIL. Ministério da Saúde. Departamento de informática do Sistema Único de Saúde do Brasil (DATASUS). Mortalidade desde 1996 pelo CID-10. Disponível em:  <https://datasus.saude.gov.br/mortalidade-desde-1996-pela-cid-10>
+
+BRASIL. Ministério de Minas e Energia. Agência Nacional do Petróleo, Gás Natural e Biocombustíveis (ANP). Dados Estatísticos. Disponível em: <https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-estatisticos>
+
+BRASIL. Ministério de Minas e Energia. Agência Nacional do Petróleo, Gás Natural e Biocombustíveis (ANP). Anuário Estatístico 2022. Disponível em: <https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/anuario-estatistico-2022>
+
+BRASIL. Ministério de Minas e Energia. Empresa de Pesquisa Energética (EPE). Balanço Energético Nacional (BEN). Disponível em: <https://www.epe.gov.br/pt/publicacoes-dados-abertos/publicacoes/balanco-energetico-nacional-ben>
+
+BRASIL. Ministério do Planejamento Orçamento e Gestão. Instituto Brasileiro de Geografia e Estatística (IBGE). Censo Demográfico de 2010. Disponível em: <https://www.ibge.gov.br/estatisticas/sociais/populacao/9662-censo-demografico-2010.html?edicao=9673>
+
+BRASIL. Ministério do Planejamento Orçamento e Gestão. Instituto Brasileiro de Geografia e Estatística (IBGE). Estimativas de População. Disponível em: <https://www.ibge.gov.br/estatisticas/sociais/populacao/9103-estimativas-de-populacao.html>
+
+BRASIL. Ministério do Planejamento Orçamento e Gestão. Instituto Brasileiro de Geografia e Estatística (IBGE). Censo Agropecuário 2006.  Disponível em: <https://ftp.ibge.gov.br/Censo_Agropecuario/Censo_Agropecuario_2006/Segunda_Apuracao/censoagro2006_2aapuracao.pdf>
+
+BRASIL. Secretaria Nacional de Trânsito. Estatísticas SENATRAN. Disponível em: <https://www.gov.br/transportes/pt-br/assuntos/transito/senatran/estatisticas>
+
+BRASIL. Secretaria Nacional de Trânsito. Frota de Veículos – RENAVAM. Disponível em: <https://www.gov.br/transportes/pt-br/assuntos/transito/conteudo-Senatran/estatisticas-frota-de-veiculos-senatran>
+
+GASNET. Entendendo o GNV. Disponível em: <https://www.gasnet.com.br/GNV/Entendendo>
