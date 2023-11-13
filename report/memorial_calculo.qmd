@@ -512,11 +512,41 @@ $$ {#eq-gnv-uf}
 
 ### Aba `COMB_CORR`: Combustível Corrigidos
 
+Encontra-se a quantidade de combustível já com os fatores de correção aplicados para os combustíveis que necessitam deste fator.
+
 ### Flex
+
+Os preços médios do álcool e da gasolina foram usados como base para transformar os veículos flex em veículo à álcool ou à gasolina conforme os dados da ANP. Para isto, foram utilizados os dados do Anuário Estatístico da ANP[^12]. Deve-se baixar os seguintes arquivos:
+
+- \textcolor{blue}{“Tabela 4.8 – Preço médio do etanol hidratado combustível ao consumidor, segundo Grandes Regiões e Unidades da Federação – 2012-2021”}
+
+- \textcolor{blue}{"Tabela 3.20 – Preço médio da gasolina C ao consumidor, segundo Grandes Regiões e Unidades da Federação – 2012-2021"}
+
+[^12]: Disponível em: <https://www.gov.br/anp/pt-br/centrais-de-conteudo/dados-abertos/anuario-estatistico-2022>
+
+Na planilha, para escolher entre gasolina ou álcool ($E_{flex}$) deve-se considerar o fato de a escolha ser pela gasolina quando o litro do álcool ($L_{alcool}$) é maior que 0,70 vezes o preço do litro da gasolina ($L_{gasolina}$). A seguir, está a @eq-esc-flex que corresponde a este cálculo.
+
+$$
+E_{flex} = 
+    \begin{cases}
+        gasolina,& \text{se } L_{gasolina} \times 0,7 < L_{alcool}\\
+        alcool,& \text{caso contrário}
+    \end{cases}
+$$ {#eq-esc-flex}
 
 ### Aba `TAX`: Taxa de consumo de combustível
 
+A \textcolor{blue}{Tabela 15} consiste na taxa de consumo de combustível para cada tipo de veículo em cada ano e é baseada nos dados do Programa Brasileiro de Etiquetagem (PBE)[^13], pelo INMETRO, para automóveis, utilitários, caminhonetes e camionetas. Para motocicletas, motonetas, caminhões, caminhões tratores, ônibus e micro-ônibus, utilizou os dados contidos no 1° Inventário Nacional de Emissões Atmosféricas por veículos automotores rodoviários pelo Ministério do Meio Ambiente (MMA)[^14]. Em relação ao Gás Natural Veicular (GNV), foi utilizado os dados do Gasnet[^15].
+
+[^13]: Disponível em: <https://www.gov.br/inmetro/pt-br/assuntos/avaliacao-da-conformidade/programa-brasileiro-de-etiquetagem/tabelas-de-eficiencia-energetica/veiculos-automotivos-pbe-veicular>
+
+[^14]: Disponível em: <http://anuario.antt.gov.br/index.php/content/view/5632/1__Inventario_Nacional_de_Emissoes_Atmosfericas_por_Veiculos_Automotores_Rodoviarios.html>
+
+[^15]: Disponível em: <https://www.gasnet.com.br/GNV/Entendendo>
+
 ### Aba `KM-ANO`: Quilometragem percorrida
+
+Nesta aba encontra-se a definição do valor da quilometragem percorrida por ano para cada veículo.
 
 ### Distribuição dos veículos conforme os combustíveis
 
