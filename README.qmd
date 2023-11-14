@@ -8,12 +8,14 @@ O presente repositório inclui o [memorial de cálculo](https://onsv.github.io/r
 
 ## Estrutura do Projeto
 
-| Pasta     | Conteúdo                                                                                                                     |
-|-------------|-----------------------------------------------------------|
-| `data/`   | Planilhas com todas as etapas de cálculo das taxas e tabelas resultantes utilizadas para criar a visualização dos resultados |
-| `plot/`   | Todos os gráficos apresentados no relatório exportados em png                                                                |
-| `R/`      | Código em R utilizado para criar todos os gráficos e tabelas do relatório técnico                                            |
-| `report/` | Versões em pdf e quarto markdown com a metodologia detalhada de cálculo das planilhas                                        |
-| `table/`  | Todas as tabelas apresentadas no relatório técnico, exportadas em png                                                        |
+- `data/`: Planilhas com todas as etapas de cálculo das taxas e tabelas resultantes utilizadas para criar a visualização dos resultados
+
+- `plot/`: Todos os gráficos apresentados no relatório exportados em png
+
+- `R/`: Código em R utilizado para criar todos os gráficos e tabelas do relatório técnico
+
+- `report/`: Versões em pdf e quarto markdown com a metodologia detalhada de cálculo das planilhas
+
+- `table/`: Todas as tabelas apresentadas no relatório técnico, exportadas em png
 
 <img src="fig/onsv.png" align="left" width="400"/>
