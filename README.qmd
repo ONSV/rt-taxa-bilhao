@@ -1,18 +1,15 @@
+---
+format: gfm
+---
 
 # Taxa de Mortes por Bilhão de Quilômetros Percorridos <img src="fig/capa.png" align="right" height="400"/>
 
-O presente repositório inclui o [memorial de
-cálculo](https://onsv.github.io/rt-taxa-bilhao/report/memorial_calculo.pdf)
-e os códigos para a criação dos gráficos e tabelas do relatório técnico
-[Taxa de Mortes por Bilhão de Quilômetros
-Percorridos](https://www.onsv.org.br/estudos-pesquisas/estudo-taxa-de-mortes-por-bilhao-de-quilometros-percorridos),
-produzido pelo Observatório Nacional de Segurança Viária em parceria com
-a Universidade Federal do Paraná.
+O presente repositório inclui o [memorial de cálculo](https://onsv.github.io/rt-taxa-bilhao/report/memorial_calculo.pdf) e os códigos para a criação dos gráficos e tabelas do relatório técnico [Taxa de Mortes por Bilhão de Quilômetros Percorridos](https://www.onsv.org.br/estudos-pesquisas/estudo-taxa-de-mortes-por-bilhao-de-quilometros-percorridos), produzido pelo Observatório Nacional de Segurança Viária em parceria com a Universidade Federal do Paraná.
 
 ## Estrutura do Projeto
 
 | Pasta     | Conteúdo                                                                                                                     |
-|-----------|------------------------------------------------------------------------------------------------------------------------------|
+|-------------|-----------------------------------------------------------|
 | `data/`   | Planilhas com todas as etapas de cálculo das taxas e tabelas resultantes utilizadas para criar a visualização dos resultados |
 | `plot/`   | Todos os gráficos apresentados no relatório exportados em png                                                                |
 | `R/`      | Código em R utilizado para criar todos os gráficos e tabelas do relatório técnico                                            |
